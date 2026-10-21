@@ -138,7 +138,7 @@
       </form>
     </div>
 
-    <!-- SCREEN 3: CBT ENGINE (DENGAN NAVIGASI PALET DI SEBELAH KANAN) -->
+    <!-- SCREEN 3: CBT ENGINE -->
     <div id="viewExam" class="hidden">
       <div class="bg-white/95 rounded-2xl p-4 mb-4 shadow-sm border border-teal-100 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center space-x-3">
@@ -157,7 +157,6 @@
         </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <!-- KONTEN SOAL DI KIRI (8 Kolom) -->
         <div class="lg:col-span-8 space-y-4">
           <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-md border border-teal-50 min-h-[480px] flex flex-col justify-between">
             <div>
@@ -180,7 +179,6 @@
             </div>
           </div>
         </div>
-        <!-- NAVIGASI / PALET NOMOR SOAL DI SEBELAH KANAN (4 Kolom) -->
         <div class="lg:col-span-4">
           <div class="bg-white rounded-3xl p-5 shadow-md border border-teal-50 sticky top-24">
             <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-3">Navigasi Nomor Soal</h4>
@@ -261,14 +259,13 @@
 
   <script>
     const FIREBASE_DB_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/nilai_tryout.json";
-    const FIREBASE_SETTINGS_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/pengaturan_ujian.json";
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBceVqYM9rwAHu3OzlPiJWrfMEQW3i0SsWYKcUvx83D_rO24EBNcN_1Zgt320wfmWO/exec";
 
-    // 30 SOAL BAHASA INDONESIA DENGAN STANDAR BACAAN 150-200 KATA & PRESISI SESUAI PDF
+    // 30 SOAL BAHASA INDONESIA LENGKAP (15 PG, 7 MCMA, 8 Kategori) PRESISI DARI PDF
     const SOAL_BAHASA_DEMO = [
-      { id: 1, type: "PG", text: "<b>Bacalah ulasan cerita berikut!</b><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang. Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing...<br><br>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....", options: ["Guru yang inspiratif", "Guru yang judes", "Guru yang dibenci", "Guru yang cantik"], correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah adalah sosok guru yang peduli, berdedikasi tinggi, dan sangat inspiratif." },
+      { id: 1, type: "PG", text: "<b>Bacalah ulasan cerita berikut!</b><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....", options: ["Guru yang inspiratif", "Guru yang judes", "Guru yang dibenci", "Guru yang cantik"], correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah adalah sosok guru yang peduli, berdedikasi tinggi, dan sangat inspiratif." },
       { id: 2, type: "PG", text: "Bu Muslimah adalah seorang guru dalam cerita Laskar Pelangi yang memiliki sifat, kecuali ....", options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." },
-      { id: 3, type: "PG", text: "<b>Bacalah teks berikut!</b><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru...<br><br>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?", options: ["Lambang budaya", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], correct: 1, topic: "Makna Simbolik", explanation: "Masyarakat Baduy menyukai satu warna sebagai lambang kesederhanaan." },
+      { id: 3, type: "PG", text: "<b>Bacalah teks berikut!</b><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru.<br><br>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?", options: ["Lambang budaya", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], correct: 1, topic: "Makna Simbolik", explanation: "Masyarakat Baduy menyukai satu warna sebagai lambang kesederhanaan." },
       { id: 4, type: "PG", text: "Ide pokok paragraf mengenai pakaian adat masyarakat Baduy tersebut adalah ....", options: ["Makna seragam masyarakat Baduy", "Seragam Baduy Dalam", "Seragam Baduy Luar", "Baju dan ikat kepala masyarakat Baduy"], correct: 0, topic: "Ide Pokok", explanation: "Ide pokok mencakup keseluruhan makna seragam masyarakat Baduy." },
       { id: 5, type: "PG", text: "Pengisian KTP yang tepat urutannya sesuai data acak (1. Jalan Gagak, 2. Islam, 3. SMA, 4. Agus Santoso, 5. Laki-laki, 6. Bandung 1983) adalah ....", options: ["4 - 3 - 2 - 1 - 5 - 6", "4 - 6 - 5 - 3 - 2 - 1", "4 - 5 - 3 - 2 - 1", "4 - 1 - 5 - 2 - 6 - 3"], correct: 1, topic: "Pengisian Formulir", explanation: "Urutan data diri yang logis: Nama, TTL, Jenis Kelamin, Pendidikan, Agama, Alamat." },
       { id: 6, type: "PG", text: "Pesan yang terkandung dalam pantun 'Jangan malas membaca buku, karena buku jendela dunia' adalah ....", options: ["Buku hanya boleh dibaca pemilik kain sutra", "Kita tidak boleh malas membaca buku karena buku sumber ilmu", "Membaca buku harus di perpustakaan", "Buku adalah barang mahal"], correct: 1, topic: "Amanat Pantun", explanation: "Isi pantun menasihati kita agar gemar membaca buku." },
@@ -307,7 +304,7 @@
         text: "Perubahan apa saja yang terjadi pada Pantai Lestari berdasarkan teks? (Jawaban benar lebih dari satu)",
         options: [
           "Dari daerah pesisir yang rawan abrasi menjadi kawasan hijau terlindung.",
-          "From tempat yang merusak pondok nelayan menjadi kawasan wisata edukasi asri.",
+          "Dari tempat yang merusak pondok nelayan menjadi kawasan wisata edukasi asri.",
           "Dari pantai tempat berkembangbiaknya ikan besar menjadi bendungan air."
         ],
         correct: [0, 1], topic: "Informasi Teks", explanation: "Pernyataan 1 dan 2 mencerminkan perubahan positif pantai." 
@@ -468,7 +465,6 @@
       "💬 \"Jangan pernah berhenti belajar! Masa depan gemilang menanti anak-anak rajin sepertimu.\""
     ];
 
-    // FITUR AUTOSAVE & RESTORE SESI UJIAN
     function persistCurrentExamState() {
       const state = { selectedSubject, currentPackageKey, currentUser, currentQuestions, currentQuestionIdx, userAnswers, raguStatus, timeRemaining, isActive: true };
       localStorage.setItem('tka_active_exam_session_demak', JSON.stringify(state));
@@ -691,7 +687,6 @@
     function prevQuestion() { if (currentQuestionIdx > 0) loadQuestion(currentQuestionIdx - 1); }
     function toggleRaguCurrent() {}
 
-    // PENGAMAN JIKA ADA SOAL YANG BELUM TERJAWAB
     function confirmSubmitExam() {
       let unansweredCount = 0;
       let firstUnansweredIdx = -1;
