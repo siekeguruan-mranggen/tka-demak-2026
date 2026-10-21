@@ -106,7 +106,8 @@
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Asal Sekolah (Ketik Manual)</label>
-          <input type="text" id="regSchool" required placeholder="Contoh: SD Negeri Demak 1..." class="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none text-xs sm:text-sm font-medium bg-slate-50/50">
+          <!-- Placeholder diperbarui menjadi SD Negeri Batursari 3[cite: 11] -->
+          <input type="text" id="regSchool" required placeholder="Contoh: SD Negeri Batursari 3..." class="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none text-xs sm:text-sm font-medium bg-slate-50/50">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -119,7 +120,7 @@
           </div>
         </div>
         <div>
-          <!-- Teks petunjuk token di atas kotak isian sesuai permintaan -->
+          <!-- Token: GENWALI persis di atas kotak isian token[cite: 11] -->
           <div class="flex items-center justify-between mb-1.5">
             <label class="block text-xs font-extrabold text-teal-800 uppercase tracking-wider">Token Ujian</label>
             <span class="text-xs font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">Token : GENWALI</span>
@@ -338,7 +339,6 @@
       e.preventDefault();
       const inputToken = document.getElementById('regToken').value.trim().toUpperCase();
       
-      // Validasi token wajib "GENWALI"
       if (inputToken !== "GENWALI") {
         document.getElementById('tokenErrorMsg').classList.remove('hidden');
         document.getElementById('regToken').focus();
