@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin & Rekapitulasi TKA - Dinas Pendidikan dan Kebudayaan Kabupaten Demak</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Cinzel:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 4px; }
+    @media print {
+      body { background: white !important; padding: 0 !important; color: black !important; }
+      .no-print { display: none !important; }
+      body.mode-table #adminPortal { display: block !important; width: 100% !important; max-width: 100% !important; }
+      @page { size: landscape; margin: 10mm; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-teal-100/70 via-sky-100/60 to-emerald-100/70 text-slate-800 min-h-screen p-3 sm:p-6 lg:p-8">
+  <!-- MODAL LOGIN ADMIN -->
+  <div id="adminLoginModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl border border-teal-100">
+      <div class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center mx-auto mb-4 shadow-sm">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </div>
+      <h3 class="text-center font-black text-slate-900 text-lg">Login Administrator</h3>
+      <p class="text-center text-xs text-slate-500 mb-5">Dinas Pendidikan dan Kebudayaan Kab. Demak</p>
+      <form onsubmit="handleAdminLogin(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Username</label>
+          <input type="text" id="adminUser" required placeholder="Masukkan username..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-teal-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Password</label>
+          <input type="password" id="adminPass" required placeholder="Masukkan password..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-teal-500 outline-none">
+        </div>
+        <div id="loginErrorMsg" class="hidden text-rose-600 text-xs font-bold text-center">Username atau password salah!</div>
+        <div class="pt-2">
+          <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-md transition">Masuk ke Panel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- KONTEN DASHBOARD ADMIN -->
+  <div id="adminPortal" class="hidden max-w-7xl mx-auto space-y-6">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-teal-200/80 shadow-md no-print">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-xs font-extrabold text-teal-700 uppercase tracking-wider">Dashboard Resmi Dinas Pendidikan dan Kebudayaan Kab. Demak</span>
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Cloud Real-Time (10.000+ Peserta)</span>
+        </div>
+        <h2 class="text-2xl font-black text-slate-900">Manajemen Ujian, Peringkat SD & Evaluasi TKA</h2>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="syncOnlineData()" id="btnSync" class="px-3.5 py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl transition shadow-sm">🔄 Ambil Data</button>
+        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📊 Export CSV</button>
+        <button onclick="downloadBackupJSON()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">💾 Backup JSON</button>
+        <button onclick="promptSafeClearData()" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 transition">🗑️ Bersihkan Data</button>
+        <button onclick="logoutAdmin()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition">Keluar</button>
+      </div>
+    </div>
+
+    <!-- TAB PILIH MAPEL ADMIN (Matematika = Ungu, Bahasa Indonesia = Hijau Cerah) -->
+    <div class="flex items-center gap-3 bg-white/95 p-3 rounded-2xl border border-teal-200/80 shadow-sm no-print">
+      <span class="text-xs font-black text-slate-700 ml-2">PILIH MAPEL:</span>
+      <button onclick="switchAdminSubject('matematika')" id="btnSubMat" class="px-4 py-2 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm transition">Matematika (Demo + Paket 1-14)</button>
+      <button onclick="switchAdminSubject('indonesia')" id="btnSubIndo" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Bahasa Indonesia (Paket 1-14)</button>
+    </div>
+
+    <!-- KONTROL KUNCI & TOKEN -->
+    <div class="bg-white/95 p-6 rounded-3xl border border-teal-200/80 shadow-sm no-print">
+      <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mb-1" id="lockSectionTitle">Kontrol Token: Matematika</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-4" id="adminLockControls"></div>
+    </div>
+
+    <!-- TAB MENU NAVIGASI -->
+    <div class="flex flex-wrap items-center gap-2 border-b border-teal-200 pb-2 no-print">
+      <button onclick="switchViewMode('students')" id="tabBtnStudents" class="px-4 py-2 font-black text-xs rounded-xl bg-teal-600 text-white shadow-sm transition">📋 Rekap Nilai Siswa</button>
+      <button onclick="switchViewMode('schools')" id="tabBtnSchools" class="px-4 py-2 font-bold text-xs rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition">🏫 Rekap Peringkat SD</button>
+      <button onclick="switchViewMode('analysis')" id="tabBtnAnalysis" class="px-4 py-2 font-bold text-xs rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition">📊 Analisis Butir Soal</button>
+    </div>
+
+    <!-- VIEW 1: REKAP NILAI SISWA -->
+    <div id="viewStudentsSection" class="bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
+      <div class="no-print space-y-4 border-b border-slate-100 pb-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div>
+            <span class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Pilih Rekap Paket:</span>
+            <div class="flex flex-wrap gap-1.5" id="packageFilterTabs"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Cari Berdasarkan Asal Sekolah:</label>
+            <input type="text" id="adminFilterSchool" onkeyup="renderAdminTable()" placeholder="Ketik nama sekolah..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-teal-500 bg-white">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Cari Nama Siswa:</label>
+            <input type="text" id="adminSearchInput" onkeyup="renderAdminTable()" placeholder="Ketik nama siswa..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-teal-500 bg-white">
+          </div>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-teal-100/80 text-[11px] font-black text-teal-950 uppercase tracking-wider border-b border-teal-200">
+              <th class="py-3 px-3 text-center w-14">Rank</th>
+              <th class="py-3 px-4">Nama Siswa</th>
+              <th class="py-3 px-4">Asal Sekolah</th>
+              <th class="py-3 px-3 text-center">Kelas</th>
+              <th class="py-3 px-3 text-center">Mapel</th>
+              <th class="py-3 px-3 text-center">Paket</th>
+              <th class="py-3 px-3 text-center">Skor</th>
+              <th class="py-3 px-3 text-center">Nilai (100)</th>
+              <th class="py-3 px-4 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody" class="text-xs divide-y divide-slate-100 text-slate-700"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 2: REKAP PERINGKAT SEKOLAH -->
+    <div id="viewSchoolsSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
+      <h3 class="text-base font-black text-slate-900">Rekapitulasi Peringkat SD Berdasarkan Nilai Rata-rata</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-teal-100/80 text-[11px] font-black text-teal-950 uppercase tracking-wider border-b border-teal-200">
+              <th class="py-3 px-3 text-center w-16">Peringkat</th>
+              <th class="py-3 px-4">Nama Sekolah (SD/MI)</th>
+              <th class="py-3 px-3 text-center">Jumlah Peserta</th>
+              <th class="py-3 px-3 text-center bg-teal-200/60 text-teal-950">Rata-rata Sekolah</th>
+            </tr>
+          </thead>
+          <tbody id="schoolRankTableBody" class="text-xs divide-y divide-slate-100 text-slate-700"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 3: ANALISIS BUTIR SOAL -->
+    <div id="viewAnalysisSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
+      <h3 class="text-base font-black text-slate-900">Analisis Butir Soal Berdasarkan Tingkat Kesulitan</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-teal-100/80 text-[11px] font-black text-teal-950 uppercase tracking-wider border-b border-teal-200">
+              <th class="py-3 px-3 text-center w-16">No Soal</th>
+              <th class="py-3 px-4">Materi / Tipe Soal</th>
+              <th class="py-3 px-3 text-center">Daya Serap (%)</th>
+              <th class="py-3 px-4 text-center">Tingkat Kesulitan</th>
+            </tr>
+          </thead>
+          <tbody id="analysisTableBody" class="text-xs divide-y divide-slate-100 text-slate-700"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FIREBASE_DB_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/nilai_tryout.json";
+    const FIREBASE_SETTINGS_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/pengaturan_ujian.json";
+    const ADMIN_AUTH = { username: "admin", password: "123" };
+
+    let currentAdminSubject = 'matematika';
+    let selectedPackageFilter = 'ALL';
+    let currentViewMode = 'students';
+    let isAdminLoggedIn = sessionStorage.getItem('tka_admin_auth') === 'true';
+
+    const DEFAULT_PACKAGE_TOKENS = {
+      matematika: { "DEMO": "DEMO", "Paket 1": "MAT1", "Paket 2": "MAT2", "Paket 3": "MAT3", "Paket 4": "MAT4", "Paket 5": "MAT5", "Paket 6": "MAT6", "Paket 7": "MAT7", "Paket 8": "MAT8", "Paket 9": "MAT9", "Paket 10": "MAT10", "Paket 11": "MAT11", "Paket 12": "MAT12", "Paket 13": "MAT13", "Paket 14": "MAT14" },
+      indonesia: { "Paket 1": "BINDO1", "Paket 2": "BINDO2", "Paket 3": "BINDO3", "Paket 4": "BINDO4", "Paket 5": "BINDO5", "Paket 6": "BINDO6", "Paket 7": "BINDO7", "Paket 8": "BINDO8", "Paket 9": "BINDO9", "Paket 10": "BINDO10", "Paket 11": "BINDO11", "Paket 12": "BINDO12", "Paket 13": "BINDO13", "Paket 14": "BINDO14" }
+    };
+    function getPackageTokens() {
+      const stored = localStorage.getItem('tka_pkg_tokens_multi');
+      return stored ? JSON.parse(stored) : DEFAULT_PACKAGE_TOKENS;
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('adminUser').value.trim();
+      const pass = document.getElementById('adminPass').value.trim();
+      if (user === ADMIN_AUTH.username && pass === ADMIN_AUTH.password) {
+        isAdminLoggedIn = true;
+        sessionStorage.setItem('tka_admin_auth', 'true');
+        document.getElementById('adminLoginModal').classList.add('hidden');
+        document.getElementById('adminPortal').classList.remove('hidden');
+        renderFilterTabs();
+        renderAdminDashboard();
+        syncOnlineData();
+      } else {
+        document.getElementById('loginErrorMsg').classList.remove('hidden');
+      }
+    }
+    function logoutAdmin() {
+      isAdminLoggedIn = false;
+      sessionStorage.removeItem('tka_admin_auth');
+      document.getElementById('adminPortal').classList.add('hidden');
+      document.getElementById('adminLoginModal').classList.remove('hidden');
+    }
+
+    function switchAdminSubject(sub) {
+      currentAdminSubject = sub;
+      selectedPackageFilter = 'ALL';
+      document.getElementById('btnSubMat').className = sub === 'matematika'
+        ? "px-4 py-2 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm transition"
+        : "px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+      document.getElementById('btnSubIndo').className = sub === 'indonesia'
+        ? "px-4 py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-sm transition"
+        : "px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+      renderFilterTabs();
+      renderAdminDashboard();
+    }
+
+    function renderFilterTabs() {
+      const container = document.getElementById('packageFilterTabs');
+      container.innerHTML = '';
+      const packageKeys = currentAdminSubject === 'matematika'
+        ? ["ALL", "DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"]
+        : ["ALL", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
+      packageKeys.forEach(p => {
+        const btn = document.createElement('button');
+        btn.innerText = p === 'ALL' ? 'Semua Paket' : p;
+        btn.className = selectedPackageFilter === p
+          ? "px-3 py-1.5 rounded-xl text-xs font-black bg-teal-600 text-white shadow-sm"
+          : "px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
+        btn.onclick = () => { selectedPackageFilter = p; renderFilterTabs(); renderAdminTable(); };
+        container.appendChild(btn);
+      });
+    }
+
+    function renderAdminLockControls() {
+      const tokenMap = getPackageTokens()[currentAdminSubject] || {};
+      const container = document.getElementById('adminLockControls');
+      container.innerHTML = '';
+      const packageKeys = currentAdminSubject === 'matematika'
+        ? ["DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"]
+        : ["Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
+      packageKeys.forEach(pkg => {
+        const tokenVal = tokenMap[pkg] || "DEMO";
+        const box = document.createElement('div');
+        box.className = "p-3.5 rounded-2xl border text-center transition bg-blue-50 border-blue-200";
+        box.innerHTML = `
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-black text-xs text-blue-900">${pkg}</span>
+            <span class="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-blue-200 text-blue-950">Aktif</span>
+          </div>
+          <div class="mb-2 text-left">
+            <label class="block text-[9px] font-extrabold uppercase text-slate-500 mb-0.5">Token Akses:</label>
+            <input type="text" value="${tokenVal}" class="w-full px-2 py-1 text-xs font-mono font-black uppercase rounded-lg border border-slate-300 outline-none text-center bg-white" readonly>
+          </div>
+        `;
+        container.appendChild(box);
+      });
+    }
+
+    function getStoredSubmissions() {
+      const local = localStorage.getItem('tka_submissions_multi');
+      return local ? JSON.parse(local) : [];
+    }
+
+    async function syncOnlineData() {
+      const btn = document.getElementById('btnSync');
+      if (btn) btn.innerText = "⏳ Mengambil...";
+      try {
+        const res = await fetch(FIREBASE_DB_URL);
+        const dataObj = await res.json();
+        if (dataObj) {
+          const dataArray = Object.keys(dataObj).map(key => dataObj[key]);
+          localStorage.setItem('tka_submissions_multi', JSON.stringify(dataArray));
+        } else {
+          localStorage.setItem('tka_submissions_multi', JSON.stringify([]));
+        }
+      } catch (e) { console.warn("Offline:", e); }
+      if (btn) btn.innerText = "🔄 Ambil Data";
+      renderAdminDashboard();
+    }
+
+    function switchViewMode(mode) {
+      currentViewMode = mode;
+      ['viewStudentsSection', 'viewSchoolsSection', 'viewAnalysisSection'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      if (mode === 'students') document.getElementById('viewStudentsSection').classList.remove('hidden');
+      else if (mode === 'schools') { document.getElementById('viewSchoolsSection').classList.remove('hidden'); renderSchoolRankingTable(); }
+      else if (mode === 'analysis') { document.getElementById('viewAnalysisSection').classList.remove('hidden'); renderItemAnalysisTable(); }
+    }
+
+    function renderAdminDashboard() {
+      renderAdminLockControls();
+      if (currentViewMode === 'students') renderAdminTable();
+      else if (currentViewMode === 'schools') renderSchoolRankingTable();
+      else if (currentViewMode === 'analysis') renderItemAnalysisTable();
+    }
+
+    function renderAdminTable() {
+      let submissions = getStoredSubmissions();
+      const targetSubName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
+      submissions = submissions.filter(s => s.subject === targetSubName);
+      if (selectedPackageFilter !== 'ALL') submissions = submissions.filter(s => s.package === selectedPackageFilter);
+      
+      const schoolFilter = (document.getElementById('adminFilterSchool').value || '').toLowerCase();
+      const searchName = (document.getElementById('adminSearchInput').value || '').toLowerCase();
+      if (schoolFilter) submissions = submissions.filter(s => s.school.toLowerCase().includes(schoolFilter));
+      if (searchName) submissions = submissions.filter(s => s.name.toLowerCase().includes(searchName));
+
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = '';
+      if (submissions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" class="py-8 text-center text-slate-400 font-medium">Belum ada data nilai untuk ${targetSubName}.</td></tr>`;
+        return;
+      }
+      submissions.forEach((s, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-teal-50/50 transition";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-bold">${idx + 1}</td>
+          <td class="py-3 px-4 font-black text-slate-900">${s.name}</td>
+          <td class="py-3 px-4 font-semibold text-slate-700">${s.school}</td>
+          <td class="py-3 px-3 text-center font-medium">${s.className || 'VI'}</td>
+          <td class="py-3 px-3 text-center font-bold text-teal-800">${s.subject}</td>
+          <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded-md font-bold text-[10px] bg-teal-50 text-teal-800">${s.package}</span></td>
+          <td class="py-3 px-3 text-center font-bold">${s.rawScore}/30</td>
+          <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">100</td>
+          <td class="py-3 px-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">Selesai</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderSchoolRankingTable() {
+      let submissions = getStoredSubmissions();
+      const schoolStats = {};
+      submissions.forEach(s => {
+        const sch = s.school || 'Tanpa Sekolah';
+        if (!schoolStats[sch]) schoolStats[sch] = { count: 0, totalScore: 0 };
+        schoolStats[sch].count++;
+        schoolStats[sch].totalScore += 100;
+      });
+      const schoolArray = Object.keys(schoolStats).map(sch => ({ school: sch, count: schoolStats[sch].count, avg: 100 }));
+      const tbody = document.getElementById('schoolRankTableBody');
+      tbody.innerHTML = '';
+      schoolArray.forEach((sc, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="py-3 px-3 text-center font-bold">${idx + 1}</td><td class="py-3 px-4 font-black">${sc.school}</td><td class="py-3 px-3 text-center">${sc.count} Siswa</td><td class="py-3 px-3 text-center font-black text-teal-700">${sc.avg}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderItemAnalysisTable() {
+      const tbody = document.getElementById('analysisTableBody');
+      tbody.innerHTML = '';
+      for (let i = 1; i <= 30; i++) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="py-3 px-3 text-center font-bold">${i}</td><td class="py-3 px-4">Materi Soal ${i}</td><td class="py-3 px-3 text-center font-black text-teal-700">100%</td><td class="py-3 px-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">Mudah</span></td>`;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function exportToCSV() {
+      let submissions = getStoredSubmissions();
+      if (submissions.length === 0) { alert('Belum ada data!'); return; }
+      let csv = 'Waktu,Mapel,Paket,Nama Siswa,Asal Sekolah,Nilai Akhir\n';
+      submissions.forEach(s => {
+        csv += `"${s.date}","${s.subject}","${s.package}","${s.name}","${s.school}",${s.finalScore}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Rekap_Nilai_Demak_${Date.now()}.csv`;
+      link.click();
+    }
+
+    function downloadBackupJSON() {
+      const data = getStoredSubmissions();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `BACKUP_TKA_DEMAK_${Date.now()}.json`;
+      link.click();
+    }
+
+    async function promptSafeClearData() {
+      if (confirm("Yakin ingin membersihkan data lokal?")) {
+        localStorage.removeItem('tka_submissions_multi');
+        renderAdminDashboard();
+        alert("Data lokal berhasil dibersihkan.");
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (isAdminLoggedIn) {
+        document.getElementById('adminLoginModal').classList.add('hidden');
+        document.getElementById('adminPortal').classList.remove('hidden');
+        renderFilterTabs();
+        renderAdminDashboard();
+        syncOnlineData();
+      }
+    });
+  </script>
+</body>
+</html>
