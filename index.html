@@ -261,45 +261,44 @@
     const FIREBASE_DB_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/nilai_tryout.json";
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBceVqYM9rwAHu3OzlPiJWrfMEQW3i0SsWYKcUvx83D_rO24EBNcN_1Zgt320wfmWO/exec";
 
-    // 30 SOAL BAHASA INDONESIA LENGKAP UTUH (15 PG, 7 MCMA, 8 Kategori) DENGAN STANDAR BACAAN 150-200 KATA SESUAI PDF
+    // 30 SOAL BAHASA INDONESIA UTUH (15 PG, 7 MCMA, 8 Kategori) SESUAI PDF ASLI
     const SOAL_BAHASA_UTUH = [
       { 
         id: 1, type: "PG", 
-        text: "<b>Bacalah cerita di bawah ini dengan cermat untuk mengisi soal nomor 1-2! (Kira-kira 170 kata)</b><br><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita di atas, karakter Bu Muslimah adalah ....</b>", 
-        options: ["Guru yang sangat inspiratif", "Guru yang judes dan pemarah", "Guru yang dibenci murid", "Guru yang acuh tak acuh"], 
-        correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah digambarkan sebagai guru yang inspiratif, sabar, bijaksana, dan berdedikasi tinggi." 
+        text: "<b>Bacalah ulasan cerita berikut! (Panjang bacaan ideal sesuai standar literasi SD)</b><br><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....</b>", 
+        options: ["Guru yang inspiratif", "Guru yang judes", "Guru yang dibenci", "Guru yang cantik"], 
+        correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah adalah sosok guru yang peduli, berdedikasi tinggi, dan sangat inspiratif." 
       },
       { 
-        id: 2, type: "PG", 
-        text: "Bu Muslimah adalah seorang guru yang memiliki sifat, kecuali ....", 
+        id: 2, type: "PG", text: "Bu Muslimah adalah seorang guru yang memiliki sifat, kecuali ....", 
         options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], 
-        correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang penuh perhatian." 
+        correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." 
       },
       { 
         id: 3, type: "PG", 
-        text: "<b>Bacalah cerita di bawah ini dengan cermat! (Kira-kira 180 kata)</b><br><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Namun, sekarang masyarakat Baduy Luar sudah lebih modern dan beberapa warganya ada yang mengenakan kaus biasa. Paman menjelaskan bahwa tradisi berpakaian ini sudah turun-temurun dijaga demi mempertahankan identitas budaya leluhur mereka di tengah arus modernisasi yang kian cepat.<br><br><b>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?</b>", 
-        options: ["Lambang budaya adat", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], 
+        text: "<b>Bacalah teks berikut!</b><br><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Namun, sekarang masyarakat Baduy Luar sudah lebih modern dan beberapa warganya ada yang mengenakan kaus biasa.<br><br><b>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?</b>", 
+        options: ["Lambang budaya", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], 
         correct: 1, topic: "Makna Simbolik", explanation: "Masyarakat Baduy menyukai satu warna sebagai lambang kesederhanaan." 
       },
       { 
-        id: 4, type: "PG", text: "Ide pokok paragraf mengenai pakaian adat masyarakat Baduy tersebut adalah ....", 
-        options: ["Makna kesederhanaan seragam Baduy", "Seragam Baduy Dalam", "Seragam Baduy Luar", "Baju dan ikat kepala masyarakat Baduy"], 
-        correct: 0, topic: "Ide Pokok", explanation: "Ide pokok mencakup keseluruhan makna seragam adat." 
+        id: 4, type: "PG", text: "Ide pokok paragraf tersebut adalah ....", 
+        options: ["Makna seragam masyarakat Baduy", "Seragam Baduy Dalam", "Seragam Baduy Luar", "Baju dan ikat kepala masyarakat Baduy"], 
+        correct: 0, topic: "Ide Pokok", explanation: "Ide pokok mencakup keseluruhan makna seragam masyarakat Baduy." 
       },
       { 
-        id: 5, type: "PG", text: "Pengisian formulir KTP yang tepat urutannya sesuai data acak (1. Jalan Gagak 7, 2. Islam, 3. SMA, 4. Agus Santoso, 5. Laki-laki, 6. Bandung 1983) adalah ....", 
+        id: 5, type: "PG", text: "Pengisian KTP yang tepat urutannya sesuai data (1. Jalan Gagak 7 Bandung, 2. Islam, 3. SMA, 4. Agus Santoso, 5. Laki-laki, 6. Bandung 25 Agustus 1983) adalah ....", 
         options: ["4 - 3 - 2 - 1 - 5 - 6", "4 - 6 - 5 - 3 - 2 - 1", "4 - 5 - 3 - 2 - 1", "4 - 1 - 5 - 2 - 6 - 3"], 
         correct: 1, topic: "Pengisian Formulir", explanation: "Urutan data diri yang logis: Nama, TTL, Jenis Kelamin, Pendidikan, Agama, Alamat." 
       },
       { 
         id: 6, type: "PG", text: "Pesan yang terkandung dalam pantun 'Jangan malas membaca buku, karena buku jendela dunia' adalah ....", 
-        options: ["Buku hanya boleh dibaca pemilik kain sutra", "Kita tidak boleh malas membaca buku karena buku sumber ilmu", "Membaca buku harus di perpustakaan", "Buku adalah barang mahal"], 
+        options: ["Buku hanya boleh dibeli dan dibaca orang kaya", "Kita tidak boleh malas membaca buku karena buku adalah sumber ilmu", "Membaca buku harus di perpustakaan besar", "Buku adalah barang mahal"], 
         correct: 1, topic: "Amanat Pantun", explanation: "Isi pantun menasihati kita agar gemar membaca buku." 
       },
       { 
-        id: 7, type: "PG", text: "Siapa tokoh utama yang ada di dalam teks wawancara dengan produsen kerupuk amplang Bu Ani?", 
+        id: 7, type: "PG", text: "Siapa tokoh yang ada di dalam teks wawancara dengan pengusaha kerupuk amplang?", 
         options: ["Wulan", "Bu Ani", "Wulan dan Bu Ani", "Pak Wahyu dan Wiwin"], 
-        correct: 2, topic: "Tokoh Wawancara", explanation: "Tokoh yang terlibat adalah Wulan (pewawancara) dan Bu Ani (narasumber)." 
+        correct: 2, topic: "Tokoh Wawancara", explanation: "Tokoh yang terlibat adalah Wulan dan Bu Ani." 
       },
       { 
         id: 8, type: "PG", text: "Mengapa penting untuk menyusun pertanyaan sebelum melakukan wawancara?", 
@@ -324,7 +323,8 @@
       { 
         id: 12, type: "PG", text: "Kalimat utama paragraf tentang Rendra yang disiplin memanfaatkan waktu luang terletak di ....", 
         options: ["Awal paragraf", "Akhir paragraf", "Tengah paragraf", "Seluruh kalimat"], 
-        correct: 0, topic: "Kalimat Utama", explanation: "Kalimat utama terletak di awal (deduktif) mengenai kedisiplinan Rendra." },
+        correct: 0, topic: "Kalimat Utama", explanation: "Kalimat utama terletak di awal (deduktif) mengenai kedisiplinan Rendra." 
+      },
       { 
         id: 13, type: "PG", text: "Manakah yang merupakan contoh kalimat langsung?", 
         options: ["Dia berkata bahwa dia senang belajar.", "\"Ayo pergi bermain ke taman!\" seru Ani.", "Dia bertanya apakah kami akan datang.", "Mereka berjanji akan hadir minggu depan."], 
@@ -408,9 +408,10 @@
         correct: [0, 1], topic: "Informasi Tokoh", explanation: "Kelahiran dan rekor paten adalah fakta penting penemu tersebut." 
       },
 
+      // SOAL KATEGORI (WAJIB DIJAWAB KETIGANYA OLEH SISWA)
       { 
         type: "Kategori", id: 23,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan berikut mengenai teks informasi Taman Pintar Yogyakarta!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan berikut mengenai teks informasi Taman Pintar Yogyakarta! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Taman Pintar membolehkan pengunjung untuk datang dan belajar sains pada hari Senin.",
           "Di dalam Planetarium, pengunjung bisa menikmati simulasi luar angkasa lewat proyektor digital.",
@@ -420,7 +421,7 @@
       },
       { 
         type: "Kategori", id: 24,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai kosakata umum dan khusus dalam teks pentas seni!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai kosakata umum dan khusus dalam teks pentas seni! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Kosakata umum 'alat musik' memiliki kosakata khusus 'angklung', 'kendang', dan 'saron'.",
           "Kata 'meriah' dan 'semangat' adalah kosakata khusus yang hanya digunakan dalam bidang musik.",
@@ -430,7 +431,7 @@
       },
       { 
         type: "Kategori", id: 25,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai teks wawancara usaha kerupuk amplang Bu Ani!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai teks wawancara usaha kerupuk amplang Bu Ani! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Tokoh yang berperan sebagai narasumber dalam kegiatan wawancara tersebut adalah Wulan.",
           "Objek atau jenis usaha yang ditekuni Bu Ani adalah bisnis kerupuk atau kemplang ikan.",
@@ -440,7 +441,7 @@
       },
       { 
         type: "Kategori", id: 26,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai informasi dan hikmah Taman Nasional Way Kambas!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai informasi dan hikmah Taman Nasional Way Kambas! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Tujuan utama didirikannya Way Kambas adalah untuk memburu gajah dan harimau sumatra.",
           "Gajah di Way Kambas dilatih agar memiliki kemampuan untuk membantu tugas manusia.",
@@ -450,7 +451,7 @@
       },
       { 
         type: "Kategori", id: 27,
-        text: "Tentukan <b>Sesuai</b> atau <b>Tidak Sesuai</b> untuk setiap nilai moral dari cerita Gupi si Kelinci yang pelit!",
+        text: "Tentukan <b>Sesuai</b> atau <b>Tidak Sesuai</b> untuk setiap nilai moral dari cerita Gupi si Kelinci yang pelit! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Suka berbagi makanan akan membawa kebahagiaan bagi sesama yang memerlukan.",
           "Menepati janji yang sudah diucapkan akan mendatangkan kebaikan dan kasih sayang.",
@@ -460,7 +461,7 @@
       },
       { 
         type: "Kategori", id: 28,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai hikmah cerita legenda 'Gunung Bagus'!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai hikmah cerita legenda 'Gunung Bagus'! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Cerita mengajarkan pentingnya keberanian untuk melawan kejahatan demi melindungi orang banyak.",
           "Hikmah cerita adalah kita sebaiknya menyerah dan menuruti kemauan orang jahat.",
@@ -470,7 +471,7 @@
       },
       { 
         type: "Kategori", id: 29,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> untuk setiap pernyataan seputar tata penulisan kalimat dan fakta!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> untuk setiap pernyataan seputar tata penulisan kalimat dan fakta! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Kalimat fakta adalah kalimat yang menyajikan peristiwa nyata dan dapat dibuktikan.",
           "Ciri utama kalimat langsung adalah menggunakan tanda hubung bahwa.",
@@ -480,7 +481,7 @@
       },
       { 
         type: "Kategori", id: 30,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai laporan pengamatan dan kesimpulan teks!",
+        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai laporan pengamatan dan kesimpulan teks! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
           "Simpulan laporan kegiatan pramuka di SD Nusantara bertujuan membentuk kedisiplinan siswa.",
           "Laporan pengamatan pertumbuhan kecambah menunjukkan kesuburan tanah berpengaruh pada tanaman.",
@@ -527,7 +528,6 @@
       "💬 \"Jangan pernah berhenti belajar! Masa depan gemilang menanti anak-anak rajin sepertimu.\""
     ];
 
-    // FUNGSI PENGACAK SOAL (SHUFFLE) AGAR URUTAN BERBEDA TIAP SISWA
     function shuffleArray(array) {
       const arr = [...array];
       for (let i = arr.length - 1; i > 0; i--) {
@@ -642,7 +642,6 @@
       document.getElementById('examStudentSchool').innerText = `${currentUser.school} • Kelas ${currentUser.className}`;
       
       userAnswers = {}; raguStatus = {}; currentQuestionIdx = 0;
-      // Soal diacak menggunakan shuffleArray agar urutan tiap siswa berbeda
       const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_BAHASA_UTUH;
       currentQuestions = shuffleArray(rawQuestions);
 
@@ -691,8 +690,13 @@
     }
 
     function isQuestionAnswered(qId) {
+      const q = currentQuestions.find(item => item.id === qId);
       const ans = userAnswers[qId];
       if (ans === undefined || ans === null) return false;
+      if (q && q.type === 'Kategori') {
+        // Khusus kategori, harus menjawab ketiga-tiganya (panjang objek map harus sama dengan jumlah pernyataan)
+        return Object.keys(ans).length === q.statements.length;
+      }
       if (Array.isArray(ans)) return ans.length > 0;
       if (typeof ans === 'object') return Object.keys(ans).length > 0;
       return true;
@@ -732,7 +736,8 @@
         let rowsHtml = `<table class="w-full text-left text-xs sm:text-sm"><thead class="bg-slate-100 text-slate-700 font-bold"><tr><th class="p-3">Pernyataan</th><th class="p-3 text-center w-20">Benar / Sesuai</th><th class="p-3 text-center w-20">Salah / Tidak</th></tr></thead><tbody class="divide-y divide-slate-100">`;
         q.statements.forEach((stmt, sIdx) => {
           const userVal = currentMap[sIdx];
-          rowsHtml += `<tr class="hover:bg-slate-50"><td class="p-3 text-slate-800">${stmt}</td><td class="p-3 text-center"><input type="radio" name="kat_${q.id}_${sIdx}" ${userVal === q.correct[sIdx] && (q.correct[sIdx]==='Benar'||q.correct[sIdx]==='Sesuai') ? 'checked' : ''} onchange="saveKategori(${q.id}, ${sIdx}, '${q.correct[sIdx]}')" class="w-4 h-4 text-emerald-600"></td><td class="p-3 text-center"><input type="radio" name="kat_${q.id}_${sIdx}" ${userVal !== q.correct[sIdx] && userVal !== undefined ? 'checked' : ''} onchange="saveKategori(${q.id}, ${sIdx}, 'Salah')" class="w-4 h-4 text-rose-600"></td></tr>`;
+          const targetTrue = q.correct[sIdx];
+          rowsHtml += `<tr class="hover:bg-slate-50"><td class="p-3 text-slate-800">${stmt}</td><td class="p-3 text-center"><input type="radio" name="kat_${q.id}_${sIdx}" ${userVal === targetTrue ? 'checked' : ''} onchange="saveKategori(${q.id}, ${sIdx}, '${targetTrue}')" class="w-4 h-4 text-emerald-600"></td><td class="p-3 text-center"><input type="radio" name="kat_${q.id}_${sIdx}" ${userVal !== undefined && userVal !== targetTrue ? 'checked' : ''} onchange="saveKategori(${q.id}, ${sIdx}, 'Salah_Other')" class="w-4 h-4 text-rose-600"></td></tr>`;
         });
         rowsHtml += `</tbody></table>`;
         table.innerHTML = rowsHtml;
@@ -762,23 +767,39 @@
     function prevQuestion() { if (currentQuestionIdx > 0) loadQuestion(currentQuestionIdx - 1); }
     function toggleRaguCurrent() {}
 
+    // VALIDASI KETAT: CEK SOAL KOSONG DAN PERINGATAN KATEGORI HARUS DIJAWAB KETIGANYA
     function confirmSubmitExam() {
       let unansweredCount = 0;
       let firstUnansweredIdx = -1;
+      let categoryIncompleteIdx = -1;
+
       currentQuestions.forEach((q, idx) => {
         if (!isQuestionAnswered(q.id)) {
           unansweredCount++;
           if (firstUnansweredIdx === -1) firstUnansweredIdx = idx;
         }
+        // Khusus soal kategori, pastikan ketiga pernyataan dijawab
+        if (q.type === 'Kategori') {
+          const ansMap = userAnswers[q.id] || {};
+          if (Object.keys(ansMap).length < q.statements.length) {
+            categoryIncompleteIdx = idx;
+          }
+        }
       });
 
+      if (categoryIncompleteIdx !== -1) {
+        alert(`⚠️ Peringatan!\n\nPada soal kategori nomor ${categoryIncompleteIdx + 1}, Anda harus menjawab ketiga pernyataan tersebut secara lengkap (tidak boleh hanya dijawab 1 atau 2 saja).`);
+        loadQuestion(categoryIncompleteIdx);
+        return;
+      }
+
       if (unansweredCount > 0) {
-        alert(`⚠️ Masih ada ${unansweredCount} soal yang belum terjawab!\n\nSilakan selesaikan semua soal terlebih dahulu. Anda akan diarahkan ke soal yang belum terjawab.`);
+        alert(`⚠️ Masih ada ${unansweredCount} soal yang belum terjawab!\n\nSilakan selesaikan semua soal terlebih dahulu.`);
         loadQuestion(firstUnansweredIdx);
         return;
       }
 
-      if (confirm("Semua soal telah terjawab. Yakin ingin mengumpulkan jawaban?")) {
+      if (confirm("Semua soal telah terjawab lengkap. Yakin ingin mengumpulkan jawaban?")) {
         submitExam();
       }
     }
@@ -806,28 +827,48 @@
       } catch (e) { console.warn("Google Sheet sibuk:", e); }
     }
 
+    // LOGIKA PENSKORAN SESUAI PERMINTAAN ANDA:
+    // 1. PG: Benar 1, Salah 0.
+    // 2. MCMA: 2 benar skor 2, 1 benar skor 1, 3 benar (semua) skor 1.
+    // 3. Kategori: Benar 3 skor 3, Benar 2 skor 2, Benar 1 skor 1.
     function submitExam() {
       clearInterval(examTimerInterval);
-      let totalScore = 0;
+      let totalRawScore = 0;
+      let maxPossibleRaw = 0;
+
       currentQuestions.forEach((q) => {
         if (q.type === 'PG') {
-          if (userAnswers[q.id] === q.correct) totalScore += (100 / currentQuestions.length);
+          maxPossibleRaw += 1;
+          if (userAnswers[q.id] === q.correct) {
+            totalRawScore += 1;
+          }
         } else if (q.type === 'MCMA') {
+          maxPossibleRaw += 2;
           const userArr = userAnswers[q.id] || [];
-          if (userArr.length > 0 && userArr.every(val => q.correct.includes(val)) && userArr.length === q.correct.length) {
-            totalScore += (100 / currentQuestions.length);
+          const correctHits = userArr.filter(x => q.correct.includes(x)).length;
+          const wrongHits = userArr.filter(x => !q.correct.includes(x)).length;
+          
+          if (wrongHits === 0 && correctHits === 2) {
+            totalRawScore += 2; // Benar 2 jawaban -> skor 2
+          } else if (wrongHits === 0 && (correctHits === 1 || correctHits === 3)) {
+            totalRawScore += 1; // 1 benar atau dijawab ketiganya -> skor 1
           }
         } else if (q.type === 'Kategori') {
+          maxPossibleRaw += 3;
           const userMap = userAnswers[q.id] || {};
-          let correctKat = 0;
+          let matchCount = 0;
           q.statements.forEach((_, sIdx) => {
-            if (userMap[sIdx] === q.correct[sIdx]) correctKat++;
+            if (userMap[sIdx] === q.correct[sIdx]) matchCount++;
           });
-          totalScore += (correctKat / q.statements.length) * (100 / currentQuestions.length);
+          if (matchCount === 3) totalRawScore += 3;       // Benar 3 -> skor 3
+          else if (matchCount === 2) totalRawScore += 2; // Benar 2 -> skor 2
+          else if (matchCount === 1) totalRawScore += 1; // Benar 1 -> skor 1
         }
       });
 
-      latestExamScore = Math.round(totalScore);
+      // Skala nilai akhir 0 - 100
+      latestExamScore = Math.min(100, Math.round((totalRawScore / maxPossibleRaw) * 100));
+
       const record = {
         id: 'TKA-' + Date.now(),
         date: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}),
@@ -837,15 +878,15 @@
         school: currentUser.school,
         className: currentUser.className,
         absen: currentUser.absen,
-        rawScore: Math.round(totalScore / 3.33),
-        maxRawScore: 30,
+        rawScore: totalRawScore,
+        maxRawScore: maxPossibleRaw,
         finalScore: latestExamScore,
         status: latestExamScore >= 70 ? 'Lulus' : 'Remedial',
         durationMinutes: 1
       };
       saveSubmission(record);
 
-      document.getElementById('resTotalScore').innerText = record.rawScore;
+      document.getElementById('resTotalScore').innerText = `${totalRawScore} / ${maxPossibleRaw}`;
       document.getElementById('resScale100').innerText = latestExamScore;
       document.getElementById('resStatus').innerText = record.status;
       document.getElementById('resDuration').innerText = "1 Menit";
@@ -857,7 +898,7 @@
 
       const btnDiscussion = document.getElementById('btnDiscussionAction');
       const noticeLocked = document.getElementById('discussionLockedNotice');
-      if (latestExamScore >= 80) {
+      if (latestExamScore >= 80) { // Syarat nilai minimal 80 untuk buka kunci pembahasan
         noticeLocked.classList.add('hidden');
         btnDiscussion.disabled = false;
         btnDiscussion.className = "px-5 py-2.5 bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm border border-teal-200 cursor-pointer";
