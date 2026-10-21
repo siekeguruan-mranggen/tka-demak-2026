@@ -60,7 +60,7 @@
             <h3 class="text-white text-3xl font-black tracking-wide">Matematika</h3>
           </div>
           <div class="p-5 bg-white flex-1 flex flex-col justify-between">
-            <p class="text-xs text-slate-500 font-semibold mb-4">15 Paket: Demo + Paket 1 s.d. 14</p>
+            <p class="text-xs text-slate-500 font-semibold mb-4">15 Paket: Demo (Drilling) + Paket 1 s.d. 14</p>
             <button onclick="selectSubject('matematika')" class="btn-subject text-xs uppercase tracking-wider transition">Mulai Belajar</button>
           </div>
         </div>
@@ -69,7 +69,7 @@
             <h3 class="text-white text-3xl font-black tracking-wide">Bahasa Indonesia</h3>
           </div>
           <div class="p-5 bg-white flex-1 flex flex-col justify-between">
-            <p class="text-xs text-slate-500 font-semibold mb-4">15 Paket: Demo (Drilling) + Paket 1 s.d. 14</p>
+            <p class="text-xs text-slate-500 font-semibold mb-4">15 Paket: Demo + Paket 1 s.d. 14</p>
             <button onclick="selectSubject('indonesia')" class="btn-subject text-xs uppercase tracking-wider transition">Mulai Belajar</button>
           </div>
         </div>
@@ -85,7 +85,7 @@
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Ganti Mata Pelajaran
       </button>
       <div class="pt-6">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-teal-100 text-teal-900 mb-2 border border-teal-200" id="badgeSubjectName">Mata Pelajaran: Bahasa Indonesia</span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-teal-100 text-teal-900 mb-2 border border-teal-200" id="badgeSubjectName">Mata Pelajaran: Matematika</span>
         <h2 class="text-3xl font-black text-slate-800 tracking-tight" id="packageSectionTitle">Pilihan Paket Belajar</h2>
         <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto mb-8 font-medium mt-1">Pilihlah paket yang dibuka di bawah ini. Masukkan token <b class="text-teal-700">GENWALI</b> untuk mulai.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8" id="packagesGrid"></div>
@@ -261,260 +261,195 @@
     const FIREBASE_DB_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/nilai_tryout.json";
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBceVqYM9rwAHu3OzlPiJWrfMEQW3i0SsWYKcUvx83D_rO24EBNcN_1Zgt320wfmWO/exec";
 
-    // 30 SOAL BAHASA INDONESIA UTUH (15 PG, 7 MCMA, 8 Kategori) SESUAI PDF ASLI
-    const SOAL_BAHASA_UTUH = [
+    // 30 SOAL MATEMATIKA UTUH PRESISI DARI PDF LAMPIRAN (PG, MCMA, Kategori)
+    const SOAL_MATEMATIKA_UTUH = [
+      { id: 1, type: "PG", text: "Hasil dari 12.304 - 286 + 4.786 adalah ....", options: ["16.804", "12.018", "6.946", "5.072"], correct: 0, topic: "Operasi Hitung", explanation: "12.304 - 286 = 12.018 + 4.786 = 16.804." },
       { 
-        id: 1, type: "PG", 
-        text: "<b>Bacalah ulasan cerita berikut! (Panjang bacaan ideal sesuai standar literasi SD)</b><br><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....</b>", 
-        options: ["Guru yang inspiratif", "Guru yang judes", "Guru yang dibenci", "Guru yang cantik"], 
-        correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah adalah sosok guru yang peduli, berdedikasi tinggi, dan sangat inspiratif." 
+        type: "Kategori", id: 2, 
+        text: "Keluarga Ahmad memerlukan air minum kemasan botol sebanyak 18 botol untuk 3 hari. Harga 1 botol air minum tersebut Rp1.400,00.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> setiap pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
+        statements: [
+          "Banyaknya air minum botol yang diperlukan Keluarga Ahmad selama 30 hari adalah 180 botol.",
+          "Biaya yang harus dikeluarkan Keluarga Ahmad untuk membeli air minum setiap 3 harinya adalah Rp25.200,00.",
+          "Total uang yang harus dikeluarkan Keluarga Ahmad selama 30 hari sebesar Rp756.000,00."
+        ],
+        correct: ["Benar", "Benar", "Salah"], topic: "Aritmatika Sosial", explanation: "(1) 30 hari = 180 botol (Benar). (2) Biaya 3 hari = Rp25.200 (Benar). (3) Total 30 hari = Rp252.000, bukan Rp756.000 (Salah)." 
+      },
+      { id: 3, type: "PG", text: "Penduduk di desa Suka Makmur berjumlah 80 kepala keluarga. 20% penduduknya bermata pencaharian sebagai guru, 30% sebagai pedagang, dan 50% sisanya sebagai petani. Rasio jumlah penduduk yang bekerja sebagai guru dan petani adalah ....", options: ["16 : 36", "16 : 40", "24 : 40", "3 : 5"], correct: 1, topic: "Rasio Perbandingan", explanation: "Guru = 16 KK, Petani = 40 KK. Rasio = 16 : 40." },
+      { 
+        type: "MCMA", id: 4, 
+        text: "Perhatikan bilangan berikut: <b>24, 54, dan 64</b>. Pilihlah semua pernyataan yang benar terkait faktorisasi prima dan KPK! (Jawaban benar lebih dari satu)",
+        options: [
+          "Faktorisasi prima dari bilangan 54 adalah 2 × 3².",
+          "Kelipatan Persekutuan Terkecil (KPK) dari ketiga bilangan tersebut dalam bentuk faktorisasi prima adalah 2⁶ × 3³.",
+          "Nilai akhir dari KPK bilangan 24, 54, dan 64 jika dihitung adalah 1.728."
+        ],
+        correct: [1, 2], topic: "Faktorisasi & KPK", explanation: "Faktorisasi 54 = 2 x 3³ (opsi 1 salah). KPK = 2⁶ x 3³ = 1.728 (opsi 2 & 3 benar)." 
       },
       { 
-        id: 2, type: "PG", text: "Bu Muslimah adalah seorang guru yang memiliki sifat, kecuali ....", 
-        options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], 
-        correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." 
+        type: "Kategori", id: 5, 
+        text: "Fatimah les matematika setiap 6 hari sekali, Dani setiap 4 hari, Anggi setiap 8 hari. Pada 1 Mei 2026, mereka les bersama pertama kalinya.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> setiap pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
+        statements: [
+          "Kelipatan Persekutuan Terkecil (KPK) dari jadwal les Fatimah, Dani, dan Anggi adalah 24 hari.",
+          "Fatimah dan Dani akan les bersama (tanpa Anggi) setiap 14 hari sekali.",
+          "Mereka bertiga akan les bersama untuk kedua kalinya pada tanggal 25 Mei 2026."
+        ],
+        correct: ["Benar", "Salah", "Benar"], topic: "KPK Jadwal Bersama", explanation: "(1) KPK = 24 hari (Benar). (2) KPK(6,4) = 12 hari, bukan 14 (Salah). (3) 1 Mei + 24 hari = 25 Mei 2026 (Benar)." 
+      },
+      { id: 6, type: "PG", text: "Denah kolam lele milik Pak Ridwan berukuran panjang 5 cm dan lebar 3 cm. Jika skala denah tersebut 1 : 2.000 maka luas kolam lele Pak Ridwan sebenarnya adalah ... m².", options: ["300", "6.000", "18.000", "30.000"], correct: 1, topic: "Skala & Luas", explanation: "Panjang = 100 m, Lebar = 60 m. Luas = 6.000 m²." },
+      { 
+        type: "Kategori", id: 7, 
+        text: "Denada memiliki tanaman hias setinggi 14 dm, dipotong sehingga berkurang 24 cm, lalu bertambah 20 mm.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> setiap pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
+        statements: [
+          "Tinggi awal tanaman hias Denada jika dinyatakan dalam sentimeter adalah 140 cm.",
+          "Pertambahan tinggi tanaman setelah beberapa hari setara dengan 2 cm.",
+          "Tinggi akhir tanaman hias Denada sekarang adalah 128 cm."
+        ],
+        correct: ["Benar", "Benar", "Salah"], topic: "Konversi Satuan Panjang", explanation: "(1) 14 dm = 140 cm (Benar). (2) 20 mm = 2 cm (Benar). (3) Tinggi akhir = 140 - 24 + 2 = 118 cm, bukan 128 (Salah)." 
       },
       { 
-        id: 3, type: "PG", 
-        text: "<b>Bacalah teks berikut!</b><br><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Namun, sekarang masyarakat Baduy Luar sudah lebih modern dan beberapa warganya ada yang mengenakan kaus biasa.<br><br><b>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?</b>", 
-        options: ["Lambang budaya", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], 
-        correct: 1, topic: "Makna Simbolik", explanation: "Masyarakat Baduy menyukai satu warna sebagai lambang kesederhanaan." 
+        type: "MCMA", id: 8, 
+        text: "Budi melempar sebuah dadu bersisi enam (sisi depan angka 6). Pilihlah semua pernyataan yang benar terkait angka pada dadu! (Jawaban benar lebih dari satu)",
+        options: [
+          "Urutan angka dari sisi depan, kanan, dan atas berturut-turut menunjukkan angka 6, 4, dan 5.",
+          "Angka yang ditunjukkan oleh sisi bagian kanan dadu merupakan bilangan ganjil.",
+          "Jika angka pada sisi atas dan sisi kanan dikalikan maka hasilnya adalah 20."
+        ],
+        correct: [0, 2], topic: "Analisis Spasial Dadu", explanation: "Sisi depan=6, kanan=4 (genap, opsi 2 salah), atas=5. Atas x Kanan = 20. Opsi 1 & 3 benar." 
       },
+      { id: 9, type: "PG", text: "Toko Wijaya mempunyai persediaan buku 20 gros. Seorang pengecer membeli 12 lusin. Banyaknya buku yang masih tersedia di Toko Wijaya adalah ....", options: ["96 buah", "936 buah", "2.736 buah", "2.868 buah"], correct: 2, topic: "Satuan Gros & Lusin", explanation: "20 gros = 2.880 buah. 12 lusin = 144 buah. Sisa = 2.736 buah." },
       { 
-        id: 4, type: "PG", text: "Ide pokok paragraf tersebut adalah ....", 
-        options: ["Makna seragam masyarakat Baduy", "Seragam Baduy Dalam", "Seragam Baduy Luar", "Baju dan ikat kepala masyarakat Baduy"], 
-        correct: 0, topic: "Ide Pokok", explanation: "Ide pokok mencakup keseluruhan makna seragam masyarakat Baduy." 
+        type: "MCMA", id: 10, 
+        text: "Pak Faisal memiliki tanah: rumah 750 m², kolam ikan 12 are, dan kebun 0,75 ha. Pilihlah semua pernyataan yang benar! (Jawaban benar lebih dari satu)",
+        options: [
+          "Luas kolam ikan Pak Faisal adalah 1.200 m².",
+          "Lahan kebun memiliki luas paling besar, yaitu 7.500 m².",
+          "Total seluruh luas lahan Pak Faisal adalah 945 m²."
+        ],
+        correct: [0, 1], topic: "Konversi Luas", explanation: "Kolam = 1.200 m², Kebun = 7.500 m², Total = 9.450 m² (opsi 3 salah). Opsi 1 & 2 benar." 
       },
+      { id: 11, type: "PG", text: "Sebotol multivitamin volumenya 0,8 dm³. Adik minum 3 kali sehari @15 ml selama 10 hari. Multivitamin yang tersisa adalah ... ml.", options: ["250", "350", "3.500", "35.000"], correct: 1, topic: "Konversi Volume", explanation: "0,8 dm³ = 800 ml. Minum = 450 ml. Sisa = 350 ml." },
+      { id: 12, type: "PG", text: "Jarak Kediri - Madiun 380 km. Bus berjalan dengan kecepatan 80 km/jam dan tiba pukul 11.30. Bus berangkat pukul ....", options: ["07.45", "07.15", "06.45", "06.15"], correct: 2, topic: "Kecepatan & Waktu", explanation: "Waktu tempuh = 4 jam 45 menit. Berangkat = 06.45." },
+      { id: 13, type: "PG", text: "Untuk mengisi kolam renang diperlukan waktu 8 jam. Jika debit 1.200 liter/menit, volume kolam adalah ... dm³.", options: ["960", "9.600", "57.600", "576.000"], correct: 3, topic: "Debit & Volume", explanation: "Volume = 1.200 liter/menit x 480 menit = 576.000 dm³." },
       { 
-        id: 5, type: "PG", text: "Pengisian KTP yang tepat urutannya sesuai data (1. Jalan Gagak 7 Bandung, 2. Islam, 3. SMA, 4. Agus Santoso, 5. Laki-laki, 6. Bandung 25 Agustus 1983) adalah ....", 
-        options: ["4 - 3 - 2 - 1 - 5 - 6", "4 - 6 - 5 - 3 - 2 - 1", "4 - 5 - 3 - 2 - 1", "4 - 1 - 5 - 2 - 6 - 3"], 
-        correct: 1, topic: "Pengisian Formulir", explanation: "Urutan data diri yang logis: Nama, TTL, Jenis Kelamin, Pendidikan, Agama, Alamat." 
+        type: "MCMA", id: 14, 
+        text: "Bangun datar memiliki 4 simetri lipat, 4 sisi sama panjang, dan diagonal tegak lurus. Pilihlah pernyataan yang benar! (Jawaban benar lebih dari satu)",
+        options: [
+          "Bangun datar tersebut adalah persegi.",
+          "Belah ketupat memiliki jumlah simetri lipat yang sama banyak dengan persegi.",
+          "Besar keempat sudut pada bangun tersebut masing-masing adalah 90° siku-siku."
+        ],
+        correct: [0, 2], topic: "Sifat Bangun Datar", explanation: "Bangun tersebut persegi. Opsi 1 & 3 benar." 
       },
-      { 
-        id: 6, type: "PG", text: "Pesan yang terkandung dalam pantun 'Jangan malas membaca buku, karena buku jendela dunia' adalah ....", 
-        options: ["Buku hanya boleh dibeli dan dibaca orang kaya", "Kita tidak boleh malas membaca buku karena buku adalah sumber ilmu", "Membaca buku harus di perpustakaan besar", "Buku adalah barang mahal"], 
-        correct: 1, topic: "Amanat Pantun", explanation: "Isi pantun menasihati kita agar gemar membaca buku." 
-      },
-      { 
-        id: 7, type: "PG", text: "Siapa tokoh yang ada di dalam teks wawancara dengan pengusaha kerupuk amplang?", 
-        options: ["Wulan", "Bu Ani", "Wulan dan Bu Ani", "Pak Wahyu dan Wiwin"], 
-        correct: 2, topic: "Tokoh Wawancara", explanation: "Tokoh yang terlibat adalah Wulan dan Bu Ani." 
-      },
-      { 
-        id: 8, type: "PG", text: "Mengapa penting untuk menyusun pertanyaan sebelum melakukan wawancara?", 
-        options: ["Agar pewawancara terlihat tidak terorganisir", "Agar wawancara berlangsung terlalu lama", "Agar pertanyaan dapat mengarahkan percakapan ke topik yang diinginkan", "Agar narasumber merasa tidak dihargai"], 
-        correct: 2, topic: "Teknik Wawancara", explanation: "Pertanyaan terstruktur memastikan topik dibahas secara komprehensif." 
-      },
-      { 
-        id: 9, type: "PG", text: "Taman Nasional Way Kambas didirikan pemerintah dengan tujuan utama untuk ....", 
-        options: ["Memburu gajah dan harimau sumatra", "Pusat konservasi melindungi hewan langka", "Tempat pariwisata komersial", "Menanam pohon bakau"], 
-        correct: 1, topic: "Informasi Teks", explanation: "Taman nasional didirikan sebagai pusat konservasi perlindungan satwa." 
-      },
-      { 
-        id: 10, type: "PG", text: "Kalimat yang termasuk jenis kalimat fakta adalah ....", 
-        options: ["Gunung Merapi adalah gunung api aktif di Pulau Jawa", "Menurutku pemandangan pantai ini sangat indah", "Alangkah indahnya ciptaan Tuhan ini!", "Semoga kita semua selalu diberikan kesehatan."], 
-        correct: 0, topic: "Fakta dan Opini", explanation: "Kalimat fakta menyajikan kenyataan yang terbukti kebenarannya." 
-      },
-      { 
-        id: 11, type: "PG", text: "Urutan kalimat acak laporan literasi pagi Jumat yang padu adalah (2. Kegiatan literasi di lapangan, 4. Siswa wajib bawa buku, 3. Guru mendampingi, 1. Menulis ringkasan) ....", 
-        options: ["2 - 4 - 1 - 3", "2 - 4 - 3 - 1", "4 - 2 - 3 - 1", "4 - 1 - 2 - 3"], 
-        correct: 1, topic: "Menyusun Paragraf", explanation: "Susunan logis dimulai dari waktu kegiatan, kewajiban siswa, pendampingan guru, hingga penutupan." 
-      },
-      { 
-        id: 12, type: "PG", text: "Kalimat utama paragraf tentang Rendra yang disiplin memanfaatkan waktu luang terletak di ....", 
-        options: ["Awal paragraf", "Akhir paragraf", "Tengah paragraf", "Seluruh kalimat"], 
-        correct: 0, topic: "Kalimat Utama", explanation: "Kalimat utama terletak di awal (deduktif) mengenai kedisiplinan Rendra." 
-      },
-      { 
-        id: 13, type: "PG", text: "Manakah yang merupakan contoh kalimat langsung?", 
-        options: ["Dia berkata bahwa dia senang belajar.", "\"Ayo pergi bermain ke taman!\" seru Ani.", "Dia bertanya apakah kami akan datang.", "Mereka berjanji akan hadir minggu depan."], 
-        correct: 1, topic: "Kalimat Langsung", explanation: "Kalimat langsung ditandai dengan penggunaan tanda petik dua." 
-      },
-      { 
-        id: 14, type: "PG", text: "Mengungkapkan sesuatu dengan perbandingan langsung atas dasar sifat yang sama disebut majas ....", 
-        options: ["Personifikasi", "Metafora", "Asosiasi", "Hiperbola"], 
-        correct: 1, topic: "Majas", explanation: "Perbandingan langsung tanpa pembanding disebut majas metafora." 
-      },
-      { 
-        id: 15, type: "PG", text: "\"Pohon nyiur melambai-lambai tertiup angin.\" Kalimat tersebut menggunakan majas ....", 
-        options: ["Personifikasi", "Metafora", "Asosiasi", "Hiperbola"], 
-        correct: 0, topic: "Majas Personifikasi", explanation: "Benda mati yang berperilaku seperti makhluk hidup adalah personifikasi." 
-      },
-
+      { id: 15, type: "PG", text: "Diketahui jari-jari lingkaran 20 cm. Keliling lingkaran tersebut adalah ... cm.", options: ["1.256", "125,6", "628", "62,8"], correct: 1, topic: "Keliling Lingkaran", explanation: "Keliling = 3,14 x 40 = 125,6 cm." },
       { 
         type: "MCMA", id: 16, 
-        text: "Pilihlah semua pernyataan yang merupakan simpulan peristiwa Asal-usul Pulau Kemaro yang tepat! (Jawaban benar lebih dari satu)",
+        text: "Sebuah segitiga memiliki alas 16 dm dan tinggi 15 dm. Pilihlah pernyataan yang benar! (Jawaban benar lebih dari satu)",
         options: [
-          "Tragedi tenggelamnya Pangeran dipicu sifat terburu-buru prasangka buruk tanpa memeriksa guci.",
-          "Siti Fatimah ikut melompat ke sungai karena ingin menyelamatkan guci emas.",
-          "Kemunculan Pulau Kemaro disimbolkan sebagai keabadian cinta sejati."
+          "Luas segitiga tersebut adalah 120 dm².",
+          "Luas segitiga tersebut sama dengan 1,2 m².",
+          "Luas segitiga tersebut sama dengan 1.200 cm²."
         ],
-        correct: [0, 2], topic: "Simpulan Cerita", explanation: "Pernyataan 1 dan 3 benar sesuai alur cerita." 
+        correct: [0, 1], topic: "Luas Segitiga", explanation: "Luas = 120 dm² = 1,2 m² (12.000 cm², opsi 3 salah). Opsi 1 & 2 benar." 
       },
-      { 
-        type: "MCMA", id: 17, 
-        text: "Pilihlah semua pesan atau amanat yang terkandung dalam puisi persahabatan 'Sahabat Sejatiku'! (Jawaban benar lebih dari satu)",
-        options: [
-          "Kita harus selalu ada untuk menghibur dan membantu sahabat yang kesulitan.",
-          "Sesama sahabat harus saling menjaga kesetiaan agar tidak terpisahkan.",
-          "Kita tidak boleh berteman dengan orang yang tidak sempurna."
-        ],
-        correct: [0, 1], topic: "Amanat Puisi", explanation: "Pernyataan 1 dan 2 sesuai dengan isi puisi." 
-      },
-      { 
-        type: "MCMA", id: 18, 
-        text: "Perubahan apa saja yang terjadi pada Pantai Lestari berdasarkan teks? (Jawaban benar lebih dari satu)",
-        options: [
-          "Dari daerah pesisir yang rawan abrasi menjadi kawasan hijau terlindung.",
-          "Dari tempat yang merusak pondok nelayan menjadi kawasan wisata edukasi asri.",
-          "Dari pantai tempat berkembangbiaknya ikan besar menjadi bendungan air."
-        ],
-        correct: [0, 1], topic: "Informasi Teks", explanation: "Pernyataan 1 dan 2 mencerminkan perubahan positif pantai." 
-      },
+      { id: 17, type: "PG", text: "Rasio siswa laki-laki dan perempuan 3 : 5. Jika jumlah seluruh siswa 40 anak, banyak siswa laki-laki adalah ... siswa.", options: ["20", "25", "18", "15"], correct: 3, topic: "Rasio Perbandingan", explanation: "Laki-laki = 3/8 x 40 = 15 siswa." },
+      { id: 18, type: "PG", text: "Ruang ukuran 4m x 6m dipasang keramik 20cm x 20cm (1 dus isi 10 buah seharga Rp15.000). Biaya yang dikeluarkan adalah ....", options: ["Rp9.600,00", "Rp60.000,00", "Rp240.000,00", "Rp900.000,00"], correct: 3, topic: "Biaya Keramik", explanation: "Kebutuhan = 60 dus x Rp15.000 = Rp900.000,00." },
       { 
         type: "MCMA", id: 19, 
-        text: "Manakah yang merupakan tujuan dan isi pesan dari poster 'BUANG SAMPAH PADA TEMPATNYA'? (Jawaban benar lebih dari satu)",
+        text: "Perhatikan lingkaran dengan bagian diarsir. Pecahan yang senilai dengan bagian yang diarsir (1/8) adalah ... (Jawaban benar lebih dari satu)",
+        options: ["2/16 dan 3/24", "2/16 dan 4/24", "3/24 dan 4/32"],
+        correct: [0, 2], topic: "Pecahan Senilai", explanation: "Pecahan senilai dengan 1/8 adalah 2/16, 3/24, 4/32. Opsi 1 & 3 benar." 
+      },
+      { 
+        type: "Kategori", id: 20, 
+        text: "Bak mobil berukuran p=15 dm, l=12 dm, t=5 dm diisi pasir penuh.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> setiap pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
+        statements: [
+          "Volume pasir maksimal yang dapat ditampung bak mobil tersebut adalah 900 dm³.",
+          "Jika pasir diisi setengah tinggi bak, volume pasir adalah 450 liter.",
+          "Luas alas bak mobil yang menyentuh pasir adalah 1.800 dm²."
+        ],
+        correct: ["Benar", "Benar", "Salah"], topic: "Volume Balok", explanation: "(1) Volume = 900 dm³ (Benar). (2) Setengah bak = 450 liter (Benar). (3) Luas alas = 180 dm², bukan 1.800 (Salah)." 
+      },
+      { id: 21, type: "PG", text: "Diketahui data: 25, 26, 22, 24, 23, 21, 22, 21, 23, 25, 23, 24, 27, 21. Median data di atas adalah ....", options: ["21", "22", "23", "24"], correct: 2, topic: "Median Data", explanation: "Median data terurut adalah 23." },
+      { id: 22, type: "PG", text: "Data buku: Cerita 55, Pelajaran 69, Pengetahuan 30, Majalah 75. Modus buku di perpustakaan adalah ....", options: ["Buku cerita", "Buku pelajaran", "Buku pengetahuan", "Majalah"], correct: 3, topic: "Modus Buku", explanation: "Majalah memiliki jumlah terbanyak yaitu 75 eksemplar." },
+      { id: 23, type: "PG", text: "Kebun Binatang Surabaya mengoleksi gajah 9, harimau 7, orang utan 8, elang jawa 5, dan beberapa komodo. Total satwa 40 ekor. Satwa yang paling banyak dikoleksi adalah ....", options: ["Gajah", "Harimau", "Komodo", "Elang jawa"], correct: 2, topic: "Analisis Satwa", explanation: "Komodo = 40 - 29 = 11 ekor (paling banyak)." },
+      { 
+        type: "Kategori", id: 24, 
+        text: "Kerja bakti: Siswa laki-laki (20 anak) bawa batu bata 3/5 kg, perempuan (15 anak) bawa 2/5 kg.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
+        statements: [
+          "Total berat batu bata yang dipindahkan oleh seluruh siswa laki-laki adalah 15 kg.",
+          "Total berat batu bata yang dipindahkan oleh seluruh siswa perempuan adalah 6 kg.",
+          "Kelompok siswa perempuan memindahkan batu bata lebih berat daripada kelompok laki-laki."
+        ],
+        correct: ["Salah", "Benar", "Salah"], topic: "Perkalian Pecahan", explanation: "(1) Laki-laki = 12 kg (Salah). (2) Perempuan = 6 kg (Benar). (3) Laki-laki lebih berat dari perempuan (Salah)." 
+      },
+      { id: 25, type: "PG", text: "Secangkir es teh butuh 2,5 sendok makan gula. Untuk 6 gelas es teh, gula yang dibutuhkan adalah ... sendok makan.", options: ["12", "15", "18", "8,5"], correct: 1, topic: "Perkalian Desimal", explanation: "6 x 2,5 = 15 sendok makan." },
+      { 
+        type: "Kategori", id: 26, 
+        text: "Riko membeli 4 buku gambar @Rp12.600, memperkirakan 4 x Rp12.000 = Rp48.000 di dompet.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
+        statements: [
+          "Riko memperkirakan harga buku dengan cara membulatkan harganya ke bawah.",
+          "Hasil perkiraan Riko akan lebih besar daripada harga asli yang harus dibayar di kasir.",
+          "Uang yang dibawa Riko tidak cukup untuk membeli 4 buku gambar tersebut."
+        ],
+        correct: ["Benar", "Salah", "Benar"], topic: "Penaksiran Harga", explanation: "(1) Pembulatan ke bawah (Benar). (2) Perkiraan lebih kecil dari asli (Salah). (3) Uang kurang dari harga asli Rp50.400 (Benar)." 
+      },
+      { id: 27, type: "PG", text: "Diagram tabungan Winston (Jan 50k, Peb 60k, Mar 80k, Apr 35k, Mei 65k). Rata-rata tabungan selama 5 bulan adalah ....", options: ["Rp58.000,00", "Rp60.000,00", "Rp72.500,00", "Rp80.000,00"], correct: 0, topic: "Rata-rata Diagram", explanation: "Total = 290.000 : 5 = Rp58.000,00." },
+      { 
+        type: "MCMA", id: 28, 
+        text: "Besar sudut P = 57° dan sudut Q = 33°. Pilihlah pernyataan yang benar! (Jawaban benar lebih dari satu)",
         options: [
-          "Mengajak warga agar selalu membuang sampah pada tempatnya demi kenyamanan bersama.",
-          "Menyampaikan pesan bahwa lingkungan bersih membuat suasana beraktivitas lebih nyaman.",
-          "Menginformasikan jadwal kerja bakti dan harga tong sampah plastik terbaru."
+          "Kedua sudut tersebut jika dijumlahkan akan membentuk sudut tumpul.",
+          "Sudut P dan sudut Q saling berpenyiku.",
+          "Selisih antara besar sudut P dan sudut Q merupakan sudut lancip."
         ],
-        correct: [0, 1], topic: "Pesan Poster", explanation: "Pernyataan 1 dan 2 adalah tujuan utama poster imbauan." 
+        correct: [1, 2], topic: "Hubungan Antar Sudut", explanation: "P+Q = 90° (berpenyiku, opsi 2 benar). P-Q = 24° (sudut lancip, opsi 3 benar). Opsi 1 salah." 
       },
       { 
-        type: "MCMA", id: 20, 
-        text: "Hewan langka apa saja yang dilindungi di pusat konservasi Taman Nasional Way Kambas? (Jawaban benar lebih dari satu)",
-        options: ["Gajah sumatra", "Badak sumatra", "Kanguru pohon"],
-        correct: [0, 1], topic: "Fauna Dilindungi", explanation: "Gajah dan badak sumatra adalah satwa yang dilindungi di Way Kambas." 
-      },
-      { 
-        type: "MCMA", id: 21, 
-        text: "Manakah kegiatan sehari-hari yang sesuai dengan pesan kebaikan dari cerita Gupi si Kelinci? (Jawaban benar lebih dari satu)",
+        type: "MCMA", id: 29, 
+        text: "Perbandingan ayam dan bebek 7 : 5. Pakan ayam 105 kg. Pilihlah pernyataan yang benar! (Jawaban benar lebih dari satu)",
         options: [
-          "Menyisihkan makanan untuk dibagi kepada teman yang lupa membawa bekal.",
-          "Segera meminta maaf dan menepati janji mengembalikan buku tepat waktu.",
-          "Memilih-milih teman dan hanya mau berbagi dengan anak yang kaya."
+          "Kebutuhan pakan bebek dalam satu bulan adalah 75 kg.",
+          "Selisih kebutuhan pakan antara ayam dan bebek adalah 30 kg.",
+          "Total kebutuhan pakan seluruh ternak dalam satu bulan adalah 210 kg."
         ],
-        correct: [0, 1], topic: "Nilai Moral", explanation: "Berbagi dan menepati janji adalah contoh perilaku terpuji." 
+        correct: [0, 1], topic: "Perbandingan Pakan", explanation: "1 bagian = 15 kg. Bebek = 75 kg (benar). Selisih = 30 kg (benar). Total = 180 kg (opsi 3 salah). Opsi 1 & 2 benar." 
       },
       { 
-        type: "MCMA", id: 22, 
-        text: "Informasi penting manakah yang terdapat dalam biografi singkat Thomas Alfa Edison? (Jawaban benar lebih dari satu)",
-        options: [
-          "Dilahirkan di Milan, Ohio pada 11 Februari 1847.",
-          "Dikenal sebagai penemu paling produktif memegang 1.093 paten.",
-          "Thomas Alfa Edison adalah penemu pertama roda ban."
-        ],
-        correct: [0, 1], topic: "Informasi Tokoh", explanation: "Kelahiran dan rekor paten adalah fakta penting penemu tersebut." 
-      },
-
-      // SOAL KATEGORI (WAJIB DIJAWAB KETIGANYA OLEH SISWA)
-      { 
-        type: "Kategori", id: 23,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan berikut mengenai teks informasi Taman Pintar Yogyakarta! <i>(Wajib diisi ketiga pernyataan)</i>",
+        type: "Kategori", id: 30, 
+        text: "Diagram batang nilai matematika siswa (Nilai 5: 4 anak, 6: 8 anak, 7: 12 anak, 8: 10 anak, 9: 6 anak). KKM = 7.<br><br>Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan berikut! <i>(Wajib diisi ketiga pernyataan)</i>",
         statements: [
-          "Taman Pintar membolehkan pengunjung untuk datang dan belajar sains pada hari Senin.",
-          "Di dalam Planetarium, pengunjung bisa menikmati simulasi luar angkasa lewat proyektor digital.",
-          "Aturan mendampingi anak di bawah usia 12 tahun hanya berlaku jika membeli tiket termahal."
+          "Jumlah seluruh siswa kelas VI yang mengikuti ujian Matematika adalah 40 siswa.",
+          "Banyaknya siswa yang belum lulus dan harus mengulang ujian adalah 12 siswa.",
+          "Nilai yang paling banyak diperoleh oleh siswa kelas VI adalah nilai 8."
         ],
-        correct: ["Salah", "Benar", "Salah"], topic: "Analisis Informasi Teks", explanation: "Senin tutup (salah), planetarium ada proyektor (benar), aturan usia untuk semua (salah)." 
-      },
-      { 
-        type: "Kategori", id: 24,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai kosakata umum dan khusus dalam teks pentas seni! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Kosakata umum 'alat musik' memiliki kosakata khusus 'angklung', 'kendang', dan 'saron'.",
-          "Kata 'meriah' dan 'semangat' adalah kosakata khusus yang hanya digunakan dalam bidang musik.",
-          "Kata 'dirigen' adalah kosakata khusus bidang musik yang memimpin pertunjukan paduan suara."
-        ],
-        correct: ["Benar", "Salah", "Benar"], topic: "Kosakata Khusus", explanation: "Alat musik adalah hipernim (benar), meriah adalah kata umum (salah), dirigen istilah musik (benar)." 
-      },
-      { 
-        type: "Kategori", id: 25,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai teks wawancara usaha kerupuk amplang Bu Ani! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Tokoh yang berperan sebagai narasumber dalam kegiatan wawancara tersebut adalah Wulan.",
-          "Objek atau jenis usaha yang ditekuni Bu Ani adalah bisnis kerupuk atau kemplang ikan.",
-          "Bu Ani sudah menggeluti usaha makanan tersebut selama lebih dari sepuluh tahun."
-        ],
-        correct: ["Salah", "Benar", "Benar"], topic: "Isi Wawancara", explanation: "Narasumber adalah Bu Ani (salah), usaha kerupuk (benar), berjalan sejak 2006 > 10 tahun (benar)." 
-      },
-      { 
-        type: "Kategori", id: 26,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai informasi dan hikmah Taman Nasional Way Kambas! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Tujuan utama didirikannya Way Kambas adalah untuk memburu gajah dan harimau sumatra.",
-          "Gajah di Way Kambas dilatih agar memiliki kemampuan untuk membantu tugas manusia.",
-          "Hikmah penting adalah menyadarkan kita menjaga kelestarian hewan langka dari kepunahan."
-        ],
-        correct: ["Salah", "Benar", "Benar"], topic: "Hikmah Teks", explanation: "Untuk konservasi bukan memburu (salah), dilatih patroli (benar), melestarikan satwa (benar)." 
-      },
-      { 
-        type: "Kategori", id: 27,
-        text: "Tentukan <b>Sesuai</b> atau <b>Tidak Sesuai</b> untuk setiap nilai moral dari cerita Gupi si Kelinci yang pelit! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Suka berbagi makanan akan membawa kebahagiaan bagi sesama yang memerlukan.",
-          "Menepati janji yang sudah diucapkan akan mendatangkan kebaikan dan kasih sayang.",
-          "Memberikan semua harta atau makanan yang dimiliki tidak akan membuat kita kesulitan."
-        ],
-        correct: ["Sesuai", "Sesuai", "Tidak Sesuai"], topic: "Nilai Moral Cerita", explanation: "Berbagi dan menepati janji sesuai (sesuai), memberikan semua harta salah (tidak sesuai)." 
-      },
-      { 
-        type: "Kategori", id: 28,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai hikmah cerita legenda 'Gunung Bagus'! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Cerita mengajarkan pentingnya keberanian untuk melawan kejahatan demi melindungi orang banyak.",
-          "Hikmah cerita adalah kita sebaiknya menyerah dan menuruti kemauan orang jahat.",
-          "Sifat tamak dan kejam pada akhirnya akan membawa kekalahan atau kerugian diri sendiri."
-        ],
-        correct: ["Benar", "Salah", "Benar"], topic: "Hikmah Legenda", explanation: "Keberanian melindungi warga (benar), menyerah pada kejahatan (salah), ketamakan membawa rugi (benar)." 
-      },
-      { 
-        type: "Kategori", id: 29,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> untuk setiap pernyataan seputar tata penulisan kalimat dan fakta! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Kalimat fakta adalah kalimat yang menyajikan peristiwa nyata dan dapat dibuktikan.",
-          "Ciri utama kalimat langsung adalah menggunakan tanda hubung bahwa.",
-          "Latar tempat di ruang tunggu klinik ditandai dengan aroma antiseptik dan rekam medis."
-        ],
-        correct: ["Benar", "Salah", "Benar"], topic: "Kaidah Kebahasaan", explanation: "Fakta itu nyata (benar), kalimat langsung pakai tanda petik bukan bahwa (salah), latar klinik sesuai teks (benar)." 
-      },
-      { 
-        type: "Kategori", id: 30,
-        text: "Tentukan <b>Benar</b> atau <b>Salah</b> pernyataan mengenai laporan pengamatan dan kesimpulan teks! <i>(Wajib diisi ketiga pernyataan)</i>",
-        statements: [
-          "Simpulan laporan kegiatan pramuka di SD Nusantara bertujuan membentuk kedisiplinan siswa.",
-          "Laporan pengamatan pertumbuhan kecambah menunjukkan kesuburan tanah berpengaruh pada tanaman.",
-          "Kalimat penjelas dalam paragraf tidak boleh mendukung kalimat utama."
-        ],
-        correct: ["Benar", "Benar", "Salah"], topic: "Kesimpulan Laporan", explanation: "Pramuka untuk disiplin (benar), kecambah dipengaruhi tanah (benar), penjelas harus mendukung utama (salah)." 
+        correct: ["Benar", "Benar", "Salah"], topic: "Interpretasi Diagram", explanation: "(1) Total siswa = 40 (Benar). (2) Belum lulus (<7) = 4 + 8 = 12 (Benar). (3) Nilai terbanyak adalah 7 (12 siswa), bukan 8 (Salah)." 
       }
     ];
 
     const DATABASE_SOAL = {
       matematika: {
-        "DEMO": { title: "Matematika - Demo", questions: [{ id: 1, type: "PG", text: "Soal matematika baru segera diperbarui.", options: ["A", "B", "C", "D"], correct: 0, topic: "Matematika", explanation: "Pembahasan menyusul." }] }
+        "DEMO": { title: "Matematika - Demo", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 1": { title: "Matematika - Paket Soal 1", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 2": { title: "Matematika - Paket Soal 2", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 3": { title: "Matematika - Paket Soal 3", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 4": { title: "Matematika - Paket Soal 4", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 5": { title: "Matematika - Paket Soal 5", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 6": { title: "Matematika - Paket Soal 6", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 7": { title: "Matematika - Paket Soal 7", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 8": { title: "Matematika - Paket Soal 8", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 9": { title: "Matematika - Paket Soal 9", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 10": { title: "Matematika - Paket Soal 10", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 11": { title: "Matematika - Paket Soal 11", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 12": { title: "Matematika - Paket Soal 12", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 13": { title: "Matematika - Paket Soal 13", questions: SOAL_MATEMATIKA_UTUH },
+        "Paket 14": { title: "Matematika - Paket Soal 14", questions: SOAL_MATEMATIKA_UTUH }
       },
       indonesia: {
-        "DEMO": { title: "Bahasa Indonesia - Paket Demo (Drilling)", questions: SOAL_BAHASA_UTUH },
-        "Paket 1": { title: "Bahasa Indonesia - Paket Soal 1", questions: SOAL_BAHASA_UTUH },
-        "Paket 2": { title: "Bahasa Indonesia - Paket Soal 2", questions: SOAL_BAHASA_UTUH },
-        "Paket 3": { title: "Bahasa Indonesia - Paket Soal 3", questions: SOAL_BAHASA_UTUH },
-        "Paket 4": { title: "Bahasa Indonesia - Paket Soal 4", questions: SOAL_BAHASA_UTUH },
-        "Paket 5": { title: "Bahasa Indonesia - Paket Soal 5", questions: SOAL_BAHASA_UTUH },
-        "Paket 6": { title: "Bahasa Indonesia - Paket Soal 6", questions: SOAL_BAHASA_UTUH },
-        "Paket 7": { title: "Bahasa Indonesia - Paket Soal 7", questions: SOAL_BAHASA_UTUH },
-        "Paket 8": { title: "Bahasa Indonesia - Paket Soal 8", questions: SOAL_BAHASA_UTUH },
-        "Paket 9": { title: "Bahasa Indonesia - Paket Soal 9", questions: SOAL_BAHASA_UTUH },
-        "Paket 10": { title: "Bahasa Indonesia - Paket Soal 10", questions: SOAL_BAHASA_UTUH },
-        "Paket 11": { title: "Bahasa Indonesia - Paket Soal 11", questions: SOAL_BAHASA_UTUH },
-        "Paket 12": { title: "Bahasa Indonesia - Paket Soal 12", questions: SOAL_BAHASA_UTUH },
-        "Paket 13": { title: "Bahasa Indonesia - Paket Soal 13", questions: SOAL_BAHASA_UTUH },
-        "Paket 14": { title: "Bahasa Indonesia - Paket Soal 14", questions: SOAL_BAHASA_UTUH }
+        "DEMO": { title: "Bahasa Indonesia - Paket Demo", questions: [{ id: 1, type: "PG", text: "Soal bahasa indonesia baru segera diperbarui.", options: ["A", "B", "C", "D"], correct: 0, topic: "Bahasa", explanation: "Pembahasan menyusul." }] }
       }
     };
 
-    let selectedSubject = 'indonesia';
+    let selectedSubject = 'matematika';
     let currentPackageKey = 'DEMO';
     let currentQuestions = [];
     let currentUser = { name: '', school: '', className: '', absen: '' };
@@ -593,9 +528,7 @@
     function renderPackagesMenu() {
       const grid = document.getElementById('packagesGrid');
       grid.innerHTML = '';
-      const packageKeys = selectedSubject === 'matematika'
-        ? ["DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"]
-        : ["DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
+      const packageKeys = ["DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
       
       packageKeys.forEach(pkg => {
         const card = document.createElement('div');
@@ -642,7 +575,7 @@
       document.getElementById('examStudentSchool').innerText = `${currentUser.school} • Kelas ${currentUser.className}`;
       
       userAnswers = {}; raguStatus = {}; currentQuestionIdx = 0;
-      const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_BAHASA_UTUH;
+      const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_MATEMATIKA_UTUH;
       currentQuestions = shuffleArray(rawQuestions);
 
       persistCurrentExamState();
@@ -694,7 +627,6 @@
       const ans = userAnswers[qId];
       if (ans === undefined || ans === null) return false;
       if (q && q.type === 'Kategori') {
-        // Khusus kategori, harus menjawab ketiga-tiganya (panjang objek map harus sama dengan jumlah pernyataan)
         return Object.keys(ans).length === q.statements.length;
       }
       if (Array.isArray(ans)) return ans.length > 0;
@@ -733,7 +665,7 @@
         const currentMap = userAnswers[q.id] || {};
         const table = document.createElement('div');
         table.className = "overflow-hidden border border-slate-200 rounded-2xl";
-        let rowsHtml = `<table class="w-full text-left text-xs sm:text-sm"><thead class="bg-slate-100 text-slate-700 font-bold"><tr><th class="p-3">Pernyataan</th><th class="p-3 text-center w-20">Benar / Sesuai</th><th class="p-3 text-center w-20">Salah / Tidak</th></tr></thead><tbody class="divide-y divide-slate-100">`;
+        let rowsHtml = `<table class="w-full text-left text-xs sm:text-sm"><thead class="bg-slate-100 text-slate-700 font-bold"><tr><th class="p-3">Pernyataan</th><th class="p-3 text-center w-20">Benar</th><th class="p-3 text-center w-20">Salah</th></tr></thead><tbody class="divide-y divide-slate-100">`;
         q.statements.forEach((stmt, sIdx) => {
           const userVal = currentMap[sIdx];
           const targetTrue = q.correct[sIdx];
@@ -767,7 +699,6 @@
     function prevQuestion() { if (currentQuestionIdx > 0) loadQuestion(currentQuestionIdx - 1); }
     function toggleRaguCurrent() {}
 
-    // VALIDASI KETAT: CEK SOAL KOSONG DAN PERINGATAN KATEGORI HARUS DIJAWAB KETIGANYA
     function confirmSubmitExam() {
       let unansweredCount = 0;
       let firstUnansweredIdx = -1;
@@ -778,7 +709,6 @@
           unansweredCount++;
           if (firstUnansweredIdx === -1) firstUnansweredIdx = idx;
         }
-        // Khusus soal kategori, pastikan ketiga pernyataan dijawab
         if (q.type === 'Kategori') {
           const ansMap = userAnswers[q.id] || {};
           if (Object.keys(ansMap).length < q.statements.length) {
@@ -827,10 +757,10 @@
       } catch (e) { console.warn("Google Sheet sibuk:", e); }
     }
 
-    // LOGIKA PENSKORAN SESUAI PERMINTAAN ANDA:
-    // 1. PG: Benar 1, Salah 0.
-    // 2. MCMA: 2 benar skor 2, 1 benar skor 1, 3 benar (semua) skor 1.
-    // 3. Kategori: Benar 3 skor 3, Benar 2 skor 2, Benar 1 skor 1.
+    // PENSKORAN MATEMATIKA SESUAI ATURAN ANDA:
+    // PG: Benar = 1, Salah = 0
+    // MCMA: 2 benar = 2, 1 benar = 1, 3 benar (semua) = 1
+    // Kategori: Benar 3 = 3, Benar 2 = 2, Benar 1 = 1
     function submitExam() {
       clearInterval(examTimerInterval);
       let totalRawScore = 0;
@@ -849,9 +779,9 @@
           const wrongHits = userArr.filter(x => !q.correct.includes(x)).length;
           
           if (wrongHits === 0 && correctHits === 2) {
-            totalRawScore += 2; // Benar 2 jawaban -> skor 2
+            totalRawScore += 2;
           } else if (wrongHits === 0 && (correctHits === 1 || correctHits === 3)) {
-            totalRawScore += 1; // 1 benar atau dijawab ketiganya -> skor 1
+            totalRawScore += 1;
           }
         } else if (q.type === 'Kategori') {
           maxPossibleRaw += 3;
@@ -860,13 +790,12 @@
           q.statements.forEach((_, sIdx) => {
             if (userMap[sIdx] === q.correct[sIdx]) matchCount++;
           });
-          if (matchCount === 3) totalRawScore += 3;       // Benar 3 -> skor 3
-          else if (matchCount === 2) totalRawScore += 2; // Benar 2 -> skor 2
-          else if (matchCount === 1) totalRawScore += 1; // Benar 1 -> skor 1
+          if (matchCount === 3) totalRawScore += 3;
+          else if (matchCount === 2) totalRawScore += 2;
+          else if (matchCount === 1) totalRawScore += 1;
         }
       });
 
-      // Skala nilai akhir 0 - 100
       latestExamScore = Math.min(100, Math.round((totalRawScore / maxPossibleRaw) * 100));
 
       const record = {
@@ -898,7 +827,7 @@
 
       const btnDiscussion = document.getElementById('btnDiscussionAction');
       const noticeLocked = document.getElementById('discussionLockedNotice');
-      if (latestExamScore >= 80) { // Syarat nilai minimal 80 untuk buka kunci pembahasan
+      if (latestExamScore >= 80) {
         noticeLocked.classList.add('hidden');
         btnDiscussion.disabled = false;
         btnDiscussion.className = "px-5 py-2.5 bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm border border-teal-200 cursor-pointer";
@@ -929,7 +858,7 @@
 
     function renderDiscussions() {
       const container = document.getElementById('discussionContainer');
-      document.getElementById('discussionTitle').innerText = `Pembahasan Soal Bahasa Indonesia - ${currentPackageKey}`;
+      document.getElementById('discussionTitle').innerText = `Pembahasan Soal Matematika - ${currentPackageKey}`;
       container.innerHTML = '';
       currentQuestions.forEach((q, idx) => {
         const item = document.createElement('div');
