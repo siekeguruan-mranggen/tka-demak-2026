@@ -33,7 +33,10 @@
   <header class="bg-white/90 backdrop-blur-md border-b border-teal-100 sticky top-0 z-40 shadow-sm no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3 cursor-pointer" onclick="showScreen('viewSubjects')">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-500 via-emerald-500 to-cyan-600 flex items-center justify-center text-white font-black text-xl shadow-md shadow-teal-300/40">Σ</div>
+        <!-- Logo Kabupaten Demak -->
+        <div class="w-10 h-10 rounded-2xl bg-white flex items-center justify-center shadow-md shadow-teal-300/40 border border-teal-200 overflow-hidden p-1">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Coat_of_arms_of_Demak_Regency.png" alt="Logo Kabupaten Demak" class="w-full h-full object-contain">
+        </div>
         <div>
           <span class="block text-[11px] sm:text-xs font-black text-teal-800 tracking-wider uppercase">DINAS PENDIDIKAN DAN KEBUDAYAAN KABUPATEN DEMAK</span>
           <h1 class="font-extrabold text-slate-800 leading-tight text-xs sm:text-sm">BELAJAR TKA KELAS 6 SD KABUPATEN DEMAK</h1>
@@ -74,7 +77,10 @@
           </div>
         </div>
       </div>
-      <div class="pt-4 text-xs font-bold text-slate-500 text-center no-print">Kabupaten Demak. All rights reserved.</div>
+      <!-- FOOTER BARU -->
+      <div class="pt-4 text-xs font-bold text-slate-500 text-center no-print">
+        Created by Muhammad Imam Suwiji © Copyright Dinas Pendidikan dan Kebudayaan Kabupaten Demak 2026
+      </div>
     </div>
 
     <!-- SCREEN 1: PILIH PAKET -->
@@ -106,7 +112,6 @@
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Asal Sekolah (Ketik Manual)</label>
-          <!-- Placeholder diperbarui menjadi SD Negeri Batursari 3[cite: 11] -->
           <input type="text" id="regSchool" required placeholder="Contoh: SD Negeri Batursari 3..." class="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none text-xs sm:text-sm font-medium bg-slate-50/50">
         </div>
         <div class="grid grid-cols-2 gap-3">
@@ -120,7 +125,6 @@
           </div>
         </div>
         <div>
-          <!-- Token: GENWALI persis di atas kotak isian token[cite: 11] -->
           <div class="flex items-center justify-between mb-1.5">
             <label class="block text-xs font-extrabold text-teal-800 uppercase tracking-wider">Token Ujian</label>
             <span class="text-xs font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">Token : GENWALI</span>
