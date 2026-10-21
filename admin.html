@@ -114,8 +114,8 @@
               <th class="py-3 px-3 text-center">Kelas</th>
               <th class="py-3 px-3 text-center">Mapel</th>
               <th class="py-3 px-3 text-center">Paket</th>
-              <th class="py-3 px-3 text-center">Skor</th>
-              <th class="py-3 px-3 text-center">Nilai (100)</th>
+              <th class="py-3 px-3 text-center">Skor Mentah</th>
+              <th class="py-3 px-3 text-center">Nilai Akhir (100)</th>
               <th class="py-3 px-4 text-center">Status</th>
             </tr>
           </thead>
@@ -142,7 +142,7 @@
       </div>
     </div>
 
-    <!-- VIEW 3: ANALISIS BUTIR SOAL (DIPERINCI DENGAN MAPEL & PAKET) -->
+    <!-- VIEW 3: ANALISIS BUTIR SOAL -->
     <div id="viewAnalysisSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
@@ -202,8 +202,6 @@
     function logoutAdmin() {
       isAdminLoggedIn = false;
       sessionStorage.removeItem('tka_admin_auth');
-      document.getElementById('adminPortal').classList.add('hidden');
-      document.getElementById('adminLoginModal').classList.add('hidden'); // safe reset
       location.reload();
     }
 
@@ -301,6 +299,8 @@
       if (schoolFilter) submissions = submissions.filter(s => s.school.toLowerCase().includes(schoolFilter));
       if (searchName) submissions = submissions.filter(s => s.name.toLowerCase().includes(searchName));
 
+      submissions.sort((a, b) => (Number(b.finalScore) || 0) - (Number(a.finalScore) || 0));
+
       const tbody = document.getElementById('adminTableBody');
       tbody.innerHTML = '';
       if (submissions.length === 0) {
@@ -310,6 +310,10 @@
       submissions.forEach((s, idx) => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-teal-50/50 transition";
+        const rawScoreDisplay = s.rawScore !== undefined ? `${s.rawScore} / ${s.maxRawScore || 66}` : `-`;
+        const finalScoreDisplay = s.finalScore !== undefined ? s.finalScore : 100;
+        const isPass = finalScoreDisplay >= 70;
+
         tr.innerHTML = `
           <td class="py-3 px-3 text-center font-bold">${idx + 1}</td>
           <td class="py-3 px-4 font-black text-slate-900">${s.name}</td>
@@ -317,9 +321,9 @@
           <td class="py-3 px-3 text-center font-medium">${s.className || 'VI'}</td>
           <td class="py-3 px-3 text-center font-bold text-teal-800">${s.subject}</td>
           <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded-md font-bold text-[10px] bg-teal-50 text-teal-800">${s.package}</span></td>
-          <td class="py-3 px-3 text-center font-bold">${s.rawScore || 30}/30</td>
-          <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">${s.finalScore || 100}</td>
-          <td class="py-3 px-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">Selesai</span></td>
+          <td class="py-3 px-3 text-center font-bold">${rawScoreDisplay}</td>
+          <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">${finalScoreDisplay}</td>
+          <td class="py-3 px-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black ${isPass ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700'}">${isPass ? 'Lulus' : 'Remedial'}</span></td>
         `;
         tbody.appendChild(tr);
       });
@@ -354,7 +358,6 @@
       });
     }
 
-    // ANALISIS BUTIR SOAL YANG DIPERINCI MENURUT MAPEL DAN PAKET TERPILIH
     function renderItemAnalysisTable() {
       const subName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
       const pkgName = selectedPackageFilter === 'ALL' ? 'Semua Paket' : selectedPackageFilter;
@@ -397,9 +400,9 @@
     function exportToCSV() {
       let submissions = getStoredSubmissions();
       if (submissions.length === 0) { alert('Belum ada data!'); return; }
-      let csv = 'Waktu,Mapel,Paket,Nama Siswa,Asal Sekolah,Nilai Akhir\n';
+      let csv = 'Waktu,Mapel,Paket,Nama Siswa,Asal Sekolah,Skor Mentah,Nilai Akhir,Status\n';
       submissions.forEach(s => {
-        csv += `"${s.date}","${s.subject}","${s.package}","${s.name}","${s.school}",${s.finalScore}\n`;
+        csv += `"${s.date}","${s.subject}","${s.package}","${s.name}","${s.school}",${s.rawScore || 0},${s.finalScore},"${s.status}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
