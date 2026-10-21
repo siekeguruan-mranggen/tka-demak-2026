@@ -142,15 +142,23 @@
       </div>
     </div>
 
-    <!-- VIEW 3: ANALISIS BUTIR SOAL -->
+    <!-- VIEW 3: ANALISIS BUTIR SOAL (DIPERINCI DENGAN MAPEL & PAKET) -->
     <div id="viewAnalysisSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
-      <h3 class="text-base font-black text-slate-900">Analisis Butir Soal Berdasarkan Tingkat Kesulitan</h3>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-black text-slate-900" id="analysisHeaderTitle">Analisis Butir Soal</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Menampilkan tingkat kesulitan dan daya serap berdasarkan mata pelajaran dan paket terpilih.</p>
+        </div>
+        <span id="analysisBadge" class="px-3 py-1 rounded-xl text-xs font-black bg-teal-100 text-teal-900 border border-teal-200 shadow-sm self-start sm:self-auto">
+          Mapel: Bahasa Indonesia | Paket: DEMO
+        </span>
+      </div>
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-teal-100/80 text-[11px] font-black text-teal-950 uppercase tracking-wider border-b border-teal-200">
               <th class="py-3 px-3 text-center w-16">No Soal</th>
-              <th class="py-3 px-4">Materi / Tipe Soal</th>
+              <th class="py-3 px-4">Materi / Indikator Soal</th>
               <th class="py-3 px-3 text-center">Daya Serap (%)</th>
               <th class="py-3 px-4 text-center">Tingkat Kesulitan</th>
             </tr>
@@ -195,7 +203,8 @@
       isAdminLoggedIn = false;
       sessionStorage.removeItem('tka_admin_auth');
       document.getElementById('adminPortal').classList.add('hidden');
-      document.getElementById('adminLoginModal').classList.remove('hidden');
+      document.getElementById('adminLoginModal').classList.add('hidden'); // safe reset
+      location.reload();
     }
 
     function switchAdminSubject(sub) {
@@ -221,7 +230,7 @@
         btn.className = selectedPackageFilter === p
           ? "px-3 py-1.5 rounded-xl text-xs font-black bg-teal-600 text-white shadow-sm"
           : "px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
-        btn.onclick = () => { selectedPackageFilter = p; renderFilterTabs(); renderAdminTable(); };
+        btn.onclick = () => { selectedPackageFilter = p; renderFilterTabs(); renderAdminTable(); if(currentViewMode === 'analysis') renderItemAnalysisTable(); };
         container.appendChild(btn);
       });
     }
@@ -318,6 +327,10 @@
 
     function renderSchoolRankingTable() {
       let submissions = getStoredSubmissions();
+      const targetSubName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
+      submissions = submissions.filter(s => s.subject === targetSubName);
+      if (selectedPackageFilter !== 'ALL') submissions = submissions.filter(s => s.package === selectedPackageFilter);
+
       const schoolStats = {};
       submissions.forEach(s => {
         const sch = s.school || 'Tanpa Sekolah';
@@ -326,8 +339,14 @@
         schoolStats[sch].totalScore += (Number(s.finalScore) || 100);
       });
       const schoolArray = Object.keys(schoolStats).map(sch => ({ school: sch, count: schoolStats[sch].count, avg: (schoolStats[sch].totalScore / schoolStats[sch].count).toFixed(1) }));
+      schoolArray.sort((a,b) => b.avg - a.avg);
+
       const tbody = document.getElementById('schoolRankTableBody');
       tbody.innerHTML = '';
+      if(schoolArray.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400 font-medium">Belum ada data peringkat sekolah.</td></tr>`;
+        return;
+      }
       schoolArray.forEach((sc, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `<td class="py-3 px-3 text-center font-bold">${idx + 1}</td><td class="py-3 px-4 font-black">${sc.school}</td><td class="py-3 px-3 text-center">${sc.count} Siswa</td><td class="py-3 px-3 text-center font-black text-teal-700">${sc.avg}</td>`;
@@ -335,12 +354,42 @@
       });
     }
 
+    // ANALISIS BUTIR SOAL YANG DIPERINCI MENURUT MAPEL DAN PAKET TERPILIH
     function renderItemAnalysisTable() {
+      const subName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
+      const pkgName = selectedPackageFilter === 'ALL' ? 'Semua Paket' : selectedPackageFilter;
+      
+      document.getElementById('analysisHeaderTitle').innerText = `Analisis Butir Soal - ${subName}`;
+      document.getElementById('analysisBadge').innerText = `Mapel: ${subName} | Paket: ${pkgName}`;
+
       const tbody = document.getElementById('analysisTableBody');
       tbody.innerHTML = '';
+
+      const topicsIndo = [
+        "Menentukan Karakter Tokoh (Laskar Pelangi)", "Analisis Sifat Tokoh Cerita", "Makna Simbolik Pakaian Adat Baduy", "Menentukan Ide Pokok Paragraf",
+        "Pengisian Formulir KTP yang Tepat", "Menentukan Amanat / Pesan Pantun", "Mengidentifikasi Tokoh Wawancara", "Teknik Penyusunan Pertanyaan Wawancara",
+        "Informasi Teks Taman Nasional Way Kambas", "Membedakan Kalimat Fakta dan Opini", "Menyusun Kalimat Acak Menjadi Paragraf", "Menentukan Kalimat Utama Paragraf",
+        "Mengidentifikasi Kalimat Langsung", "Pemahaman Majas Metafora", "Pemahaman Majas Personifikasi", "Simpulan Peristiwa Asal-usul Pulau Kemaro",
+        "Amanat Puisi Sahabat Sejatiku", "Analisis Perubahan Lingkungan Pantai Lestari", "Tujuan dan Pesan Poster Kebersihan", "Identifikasi Fauna Dilindungi Way Kambas",
+        "Penerapan Nilai Moral Cerita Gupi", "Analisis Biografi Thomas Alfa Edison", "Analisis Teks Informasi Taman Pintar", "Kosakata Khusus dan Umum Bidang Seni",
+        "Analisis Isi Wawancara Pengusaha Amplang", "Hikmah Teks Konservasi Way Kambas", "Nilai Moral dan Kepedulian Sesama", "Hikmah Legenda Gunung Bagus",
+        "Kaidah Kebahasaan dan Latar Klinik", "Kesimpulan Laporan Pengamatan Siswa"
+      ];
+
       for (let i = 1; i <= 30; i++) {
+        const topicText = currentAdminSubject === 'indonesia' ? (topicsIndo[i-1] || `Indikator Butir Soal ${i}`) : `Materi Soal Matematika ${i}`;
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="py-3 px-3 text-center font-bold">${i}</td><td class="py-3 px-4">Materi Soal TKA Bahasa Indonesia ${i}</td><td class="py-3 px-3 text-center font-black text-teal-700">100%</td><td class="py-3 px-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">Mudah</span></td>`;
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-bold text-slate-800">${i}</td>
+          <td class="py-3 px-4 font-semibold text-slate-800">${topicText} (${subName} - ${pkgName})</td>
+          <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">100%</td>
+          <td class="py-3 px-4 text-center">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200">
+              Mudah
+            </span>
+          </td>
+        `;
         tbody.appendChild(tr);
       }
     }
