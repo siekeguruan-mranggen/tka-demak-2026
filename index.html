@@ -13,9 +13,6 @@
       margin: 0; 
       padding: 0; 
       background-color: #e0f2fe; 
-      background-image: radial-gradient(#0d9488 0.75px, transparent 0.75px), radial-gradient(#0d9488 0.75px, #e0f2fe 0.75px);
-      background-size: 30px 30px;
-      background-position: 0 0, 15px 15px;
       color: #1e293b; 
     }
     .font-cinzel { font-family: 'Cinzel', serif; }
@@ -24,8 +21,8 @@
     .hidden { display: none !important; }
     .bg-math { background-color: #7c3aed !important; color: #ffffff !important; }
     .bg-indo { background-color: #10b981 !important; color: #ffffff !important; }
-    .card-subject { border-radius: 1.5rem; overflow: hidden; background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #ccfbf1; }
-    .btn-subject { background-color: #e0e7ff; color: #3730a3; padding: 0.75rem; border-radius: 1rem; font-weight: 900; width: 100%; border: none; cursor: pointer; }
+    .card-subject { border-radius: 1.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #ccfbf1; position: relative; z-index: 10; }
+    .btn-subject { background-color: #e0e7ff; color: #3730a3; padding: 0.75rem; border-radius: 1rem; font-weight: 900; width: 100%; border: none; cursor: pointer; position: relative; z-index: 20; }
     .btn-subject:hover { background-color: #c7d2fe; }
     
     .no-copy {
@@ -65,7 +62,7 @@
   </header>
 
   <!-- CONTAINER UTAMA -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center relative z-20">
     <!-- SCREEN 0: PILIH MATA PELAJARAN -->
     <div id="viewSubjects" class="max-w-4xl mx-auto w-full text-center py-6">
       <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black bg-teal-100 text-teal-900 mb-3 border border-teal-200 shadow-sm">
@@ -75,7 +72,7 @@
       <p class="text-slate-700 text-xs sm:text-sm max-w-lg mx-auto mt-2 mb-8 font-medium">Fokuskan belajarmu pada mata pelajaran yang ingin kamu kerjakan hari ini.</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
         <div class="card-subject hover:-translate-y-1.5 transition-all duration-200 flex flex-col">
-          <div class="bg-math py-14 flex items-center justify-center shadow-inner">
+          <div class="bg-math py-14 flex items-center justify-center shadow-inner cursor-pointer" onclick="selectSubject('matematika')">
             <h3 class="text-white text-3xl font-black tracking-wide">Matematika</h3>
           </div>
           <div class="p-5 bg-white flex-1 flex flex-col justify-between">
@@ -84,7 +81,7 @@
           </div>
         </div>
         <div class="card-subject hover:-translate-y-1.5 transition-all duration-200 flex flex-col">
-          <div class="bg-indo py-14 flex items-center justify-center shadow-inner">
+          <div class="bg-indo py-14 flex items-center justify-center shadow-inner cursor-pointer" onclick="selectSubject('indonesia')">
             <h3 class="text-white text-3xl font-black tracking-wide">Bahasa Indonesia</h3>
           </div>
           <div class="p-5 bg-white flex-1 flex flex-col justify-between">
@@ -100,19 +97,19 @@
 
     <!-- SCREEN 1: PILIH PAKET -->
     <div id="viewPackages" class="hidden max-w-4xl mx-auto w-full bg-white/95 rounded-3xl p-6 sm:p-10 shadow-xl border border-teal-100 text-center relative overflow-hidden">
-      <button onclick="showScreen('viewSubjects')" class="inline-flex items-center text-xs font-bold text-teal-700 hover:text-teal-900 mb-4 absolute top-6 left-6">
+      <button onclick="showScreen('viewSubjects')" class="inline-flex items-center text-xs font-bold text-teal-700 hover:text-teal-900 mb-4 absolute top-6 left-6 z-30">
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Ganti Mata Pelajaran
       </button>
       <div class="pt-6">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-teal-100 text-teal-900 mb-2 border border-teal-200" id="badgeSubjectName">Mata Pelajaran: Matematika</span>
         <h2 class="text-3xl font-black text-slate-800 tracking-tight" id="packageSectionTitle">Pilihan Paket Belajar</h2>
         <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto mb-8 font-medium mt-1">Pilihlah paket yang dibuka di bawah ini. Masukkan <b class="text-teal-700">Token Ujian</b> resmi.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8" id="packagesGrid"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 relative z-20" id="packagesGrid"></div>
       </div>
     </div>
 
     <!-- SCREEN 2: REGISTRASI & TOKEN -->
-    <div id="viewRegistration" class="hidden max-w-lg mx-auto bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-100 relative">
+    <div id="viewRegistration" class="hidden max-w-lg mx-auto bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-100 relative z-20">
       <button onclick="showScreen('viewPackages')" class="inline-flex items-center text-xs font-bold text-teal-700 hover:text-teal-900 mb-5">
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Kembali ke Pilihan Paket
       </button>
@@ -158,7 +155,7 @@
     </div>
 
     <!-- SCREEN 3: CBT ENGINE -->
-    <div id="viewExam" class="hidden">
+    <div id="viewExam" class="hidden relative z-20">
       <div class="bg-white/95 rounded-2xl p-4 mb-4 shadow-sm border border-teal-100 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 text-white font-black flex items-center justify-center text-sm" id="userInitial">S</div>
@@ -212,7 +209,7 @@
     </div>
 
     <!-- SCREEN 4: HASIL NILAI SISWA -->
-    <div id="viewResult" class="hidden max-w-3xl mx-auto space-y-6">
+    <div id="viewResult" class="hidden max-w-3xl mx-auto space-y-6 relative z-20">
       <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-100 text-center">
         <h2 class="text-2xl font-black text-slate-800">Ujian Telah Selesai!</h2>
         <p class="text-xs font-semibold text-slate-500 mt-1" id="submitStatusText">Nilai tryout Anda telah otomatis tersimpan.</p>
@@ -448,14 +445,14 @@
     const SOAL_BAHASA_UTUH = [
       { 
         id: 1, type: "PG", 
-        text: "<b>Bacalah ulasan cerita berikut! (Standar panjang bacaan literasi 150-200 kata)</b><br><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....</b>", 
+        text: "<b>Bacalah ulasan cerita berikut!</b><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....</b>", 
         options: ["Guru yang inspiratif", "Guru yang judes", "Guru yang dibenci", "Guru yang cantik"], 
         correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah adalah sosok guru yang peduli, berdedikasi tinggi, dan sangat inspiratif." 
       },
       { id: 2, type: "PG", text: "Bu Muslimah adalah seorang guru yang memiliki sifat, kecuali ....", options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." },
       { 
         id: 3, type: "PG", 
-        text: "<b>Bacalah teks berikut!</b><br><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Namun, sekarang masyarakat Baduy Luar sudah lebih modern dan beberapa warganya ada yang mengenakan kaus biasa.<br><br><b>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?</b>", 
+        text: "<b>Bacalah teks berikut!</b><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?", 
         options: ["Lambang budaya", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], 
         correct: 1, topic: "Makna Simbolik", explanation: "Masyarakat Baduy menyukai satu warna sebagai lambang kesederhanaan." 
       },
@@ -1139,7 +1136,11 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       syncExamSettings();
-      checkActiveExamSession();
+      // Hanya cek sesi jika benar-benar ada ujian yang belum selesai tersimpan
+      const saved = localStorage.getItem('tka_active_exam_session_demak');
+      if (saved) {
+        checkActiveExamSession();
+      }
     });
   </script>
 </body>
