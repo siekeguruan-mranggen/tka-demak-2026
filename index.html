@@ -13,6 +13,9 @@
       margin: 0; 
       padding: 0; 
       background-color: #e0f2fe; 
+      background-image: radial-gradient(#0d9488 0.75px, transparent 0.75px), radial-gradient(#0d9488 0.75px, #e0f2fe 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
       color: #1e293b; 
     }
     .font-cinzel { font-family: 'Cinzel', serif; }
@@ -21,8 +24,8 @@
     .hidden { display: none !important; }
     .bg-math { background-color: #7c3aed !important; color: #ffffff !important; }
     .bg-indo { background-color: #10b981 !important; color: #ffffff !important; }
-    .card-subject { border-radius: 1.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #ccfbf1; position: relative; z-index: 10; }
-    .btn-subject { background-color: #e0e7ff; color: #3730a3; padding: 0.75rem; border-radius: 1rem; font-weight: 900; width: 100%; border: none; cursor: pointer; position: relative; z-index: 20; }
+    .card-subject { border-radius: 1.5rem; overflow: hidden; background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #ccfbf1; }
+    .btn-subject { background-color: #e0e7ff; color: #3730a3; padding: 0.75rem; border-radius: 1rem; font-weight: 900; width: 100%; border: none; cursor: pointer; }
     .btn-subject:hover { background-color: #c7d2fe; }
     
     .no-copy {
@@ -62,7 +65,7 @@
   </header>
 
   <!-- CONTAINER UTAMA -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center relative z-20">
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
     <!-- SCREEN 0: PILIH MATA PELAJARAN -->
     <div id="viewSubjects" class="max-w-4xl mx-auto w-full text-center py-6">
       <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black bg-teal-100 text-teal-900 mb-3 border border-teal-200 shadow-sm">
@@ -72,7 +75,7 @@
       <p class="text-slate-700 text-xs sm:text-sm max-w-lg mx-auto mt-2 mb-8 font-medium">Fokuskan belajarmu pada mata pelajaran yang ingin kamu kerjakan hari ini.</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
         <div class="card-subject hover:-translate-y-1.5 transition-all duration-200 flex flex-col">
-          <div class="bg-math py-14 flex items-center justify-center shadow-inner cursor-pointer" onclick="selectSubject('matematika')">
+          <div class="bg-math py-14 flex items-center justify-center shadow-inner">
             <h3 class="text-white text-3xl font-black tracking-wide">Matematika</h3>
           </div>
           <div class="p-5 bg-white flex-1 flex flex-col justify-between">
@@ -81,7 +84,7 @@
           </div>
         </div>
         <div class="card-subject hover:-translate-y-1.5 transition-all duration-200 flex flex-col">
-          <div class="bg-indo py-14 flex items-center justify-center shadow-inner cursor-pointer" onclick="selectSubject('indonesia')">
+          <div class="bg-indo py-14 flex items-center justify-center shadow-inner">
             <h3 class="text-white text-3xl font-black tracking-wide">Bahasa Indonesia</h3>
           </div>
           <div class="p-5 bg-white flex-1 flex flex-col justify-between">
@@ -97,19 +100,19 @@
 
     <!-- SCREEN 1: PILIH PAKET -->
     <div id="viewPackages" class="hidden max-w-4xl mx-auto w-full bg-white/95 rounded-3xl p-6 sm:p-10 shadow-xl border border-teal-100 text-center relative overflow-hidden">
-      <button onclick="showScreen('viewSubjects')" class="inline-flex items-center text-xs font-bold text-teal-700 hover:text-teal-900 mb-4 absolute top-6 left-6 z-30">
+      <button onclick="showScreen('viewSubjects')" class="inline-flex items-center text-xs font-bold text-teal-700 hover:text-teal-900 mb-4 absolute top-6 left-6">
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Ganti Mata Pelajaran
       </button>
       <div class="pt-6">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-teal-100 text-teal-900 mb-2 border border-teal-200" id="badgeSubjectName">Mata Pelajaran: Matematika</span>
         <h2 class="text-3xl font-black text-slate-800 tracking-tight" id="packageSectionTitle">Pilihan Paket Belajar</h2>
         <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto mb-8 font-medium mt-1">Pilihlah paket yang dibuka di bawah ini. Masukkan <b class="text-teal-700">Token Ujian</b> resmi.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 relative z-20" id="packagesGrid"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8" id="packagesGrid"></div>
       </div>
     </div>
 
     <!-- SCREEN 2: REGISTRASI & TOKEN -->
-    <div id="viewRegistration" class="hidden max-w-lg mx-auto bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-100 relative z-20">
+    <div id="viewRegistration" class="hidden max-w-lg mx-auto bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-100 relative">
       <button onclick="showScreen('viewPackages')" class="inline-flex items-center text-xs font-bold text-teal-700 hover:text-teal-900 mb-5">
         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Kembali ke Pilihan Paket
       </button>
@@ -155,7 +158,7 @@
     </div>
 
     <!-- SCREEN 3: CBT ENGINE -->
-    <div id="viewExam" class="hidden relative z-20">
+    <div id="viewExam" class="hidden">
       <div class="bg-white/95 rounded-2xl p-4 mb-4 shadow-sm border border-teal-100 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 text-white font-black flex items-center justify-center text-sm" id="userInitial">S</div>
@@ -209,7 +212,7 @@
     </div>
 
     <!-- SCREEN 4: HASIL NILAI SISWA -->
-    <div id="viewResult" class="hidden max-w-3xl mx-auto space-y-6 relative z-20">
+    <div id="viewResult" class="hidden max-w-3xl mx-auto space-y-6">
       <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-100 text-center">
         <h2 class="text-2xl font-black text-slate-800">Ujian Telah Selesai!</h2>
         <p class="text-xs font-semibold text-slate-500 mt-1" id="submitStatusText">Nilai tryout Anda telah otomatis tersimpan.</p>
@@ -442,109 +445,175 @@
       }
     ];
 
+    // DATABASE BAHASA INDONESIA UTUH (LENGKAP DENGAN TEKS BACAAN DI ATAS SOAL)
     const SOAL_BAHASA_UTUH = [
       { 
         id: 1, type: "PG", 
-        text: "<b>Bacalah ulasan cerita berikut!</b><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....</b>", 
+        text: "<b>Bacalah ulasan cerita berikut!</b><br><br>Di sekolah mereka, Ikal dan Lintang juga bertemu dengan seorang guru yang sangat inspiratif, Bu Muslimah. Bu Muslimah adalah sosok yang peduli dan berdedikasi tinggi terhadap pendidikan anak-anak di desa tersebut. Dia tidak hanya mengajarkan pelajaran, tetapi juga memberikan motivasi dan semangat kepada para siswanya. Bu Muslimah menjadi panutan bagi Laskar Pelangi dan membantu mereka melewati berbagai rintangan yang menghadang.<br><br>Selain sebagai guru, Bu Muslimah juga berperan sebagai pembimbing bagi Laskar Pelangi. Dia memberikan nasihat, mendengarkan keluh kesah mereka, dan memberikan dukungan moral ketika mereka menghadapi kesulitan. Bu Muslimah adalah sosok yang sabar, bijaksana, dan selalu ada untuk mendukung perjuangan para siswanya. Keberadaannya sangat berarti bagi Laskar Pelangi dalam menghadapi tantangan dan menjaga semangat mereka tetap berkobar.<br><br><b>Berdasarkan ulasan singkat cerita Laskar Pelangi tersebut, karakter Bu Muslimah adalah ....</b>", 
         options: ["Guru yang inspiratif", "Guru yang judes", "Guru yang dibenci", "Guru yang cantik"], 
         correct: 0, topic: "Karakter Tokoh", explanation: "Bu Muslimah adalah sosok guru yang peduli, berdedikasi tinggi, dan sangat inspiratif." 
       },
-      { id: 2, type: "PG", text: "Bu Muslimah adalah seorang guru yang memiliki sifat, kecuali ....", options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." },
+      { 
+        id: 2, type: "PG", 
+        text: "<b>Berdasarkan teks cerita Laskar Pelangi pada soal sebelumnya (Bu Muslimah), sifat yang dimiliki oleh Bu Muslimah adalah sebagai berikut, KECUALI ....</b>", 
+        options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], 
+        correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." 
+      },
       { 
         id: 3, type: "PG", 
-        text: "<b>Bacalah teks berikut!</b><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?", 
+        text: "<b>Bacalah teks berikut!</b><br><br>Aku bingung kenapa orang Baduy yang tadi siang seperti memakai seragam. Mereka semua memakai baju hitam dan ikat kepala biru. Aku langsung bertanya pada Paman mengenai itu. Masyarakat Baduy ternyata memang suka memakai satu warna saja sebagai lambang kesederhanaan. Baduy Dalam memakai baju putih dan mengenakan ikat kepala putih. Sedangkan Baduy Luar biasanya memakai baju hitam-hitam dan ikat kepala biru. Ikat kepala mereka ada yang polos dan berpola batik. Batik itu bernama Surowasan dan motifnya bernama paku debus.<br><br>Namun, sekarang masyarakat Baduy Luar sudah lebih modern dan beberapa warganya ada yang mengenakan kaus biasa.<br><br><b>Apa arti masyarakat Baduy memakai satu warna saat berpakaian pada acara tersebut?</b>", 
         options: ["Lambang budaya", "Lambang kesederhanaan", "Lambang keharmonisan", "Lambang persatuan"], 
         correct: 1, topic: "Makna Simbolik", explanation: "Masyarakat Baduy menyukai satu warna sebagai lambang kesederhanaan." 
       },
-      { id: 4, type: "PG", text: "Ide pokok paragraf tersebut adalah ....", options: ["Makna seragam masyarakat Baduy", "Seragam Baduy Dalam", "Seragam Baduy Luar", "Baju dan ikat kepala masyarakat Baduy"], correct: 0, topic: "Ide Pokok", explanation: "Ide pokok mencakup keseluruhan makna seragam masyarakat Baduy." },
-      { id: 5, type: "PG", text: "Pengisian KTP yang tepat urutannya sesuai data (1. Jalan Gagak 7 Bandung, 2. Islam, 3. SMA, 4. Agus Santoso, 5. Laki-laki, 6. Bandung 25 Agustus 1983) adalah ....", options: ["4 - 3 - 2 - 1 - 5 - 6", "4 - 6 - 5 - 3 - 2 - 1", "4 - 5 - 3 - 2 - 1", "4 - 1 - 5 - 2 - 6 - 3"], correct: 1, topic: "Pengisian Formulir", explanation: "Urutan data diri yang logis: Nama, TTL, Jenis Kelamin, Pendidikan, Agama, Alamat." },
-      { id: 6, type: "PG", text: "Pesan yang terkandung dalam pantun 'Jangan malas membaca buku, karena buku jendela dunia' adalah ....", options: ["Buku hanya boleh dibeli dan dibaca orang kaya", "Kita tidak boleh malas membaca buku karena buku adalah sumber ilmu", "Membaca buku harus di perpustakaan besar", "Buku adalah barang mahal"], correct: 1, topic: "Amanat Pantun", explanation: "Isi pantun menasihati kita agar gemar membaca buku." },
-      { id: 7, type: "PG", text: "Siapa tokoh yang ada di dalam teks wawancara dengan pengusaha kerupuk amplang?", options: ["Wulan", "Bu Ani", "Wulan dan Bu Ani", "Pak Wahyu dan Wiwin"], correct: 2, topic: "Tokoh Wawancara", explanation: "Tokoh yang terlibat adalah Wulan dan Bu Ani." },
-      { id: 8, type: "PG", text: "Mengapa penting untuk menyusun pertanyaan sebelum melakukan wawancara?", options: ["Agar pewawancara terlihat tidak terorganisir", "Agar wawancara berlangsung terlalu lama", "Agar pertanyaan dapat mengarahkan percakapan ke topik yang diinginkan", "Agar narasumber merasa tidak dihargai"], correct: 2, topic: "Teknik Wawancara", explanation: "Pertanyaan terstruktur memastikan topik dibahas secara komprehensif." },
-      { id: 9, type: "PG", text: "Taman Nasional Way Kambas didirikan pemerintah dengan tujuan utama untuk ....", options: ["Memburu gajah dan harimau sumatra", "Pusat konservasi melindungi hewan langka", "Tempat pariwisata komersial", "Menanam pohon bakau"], correct: 1, topic: "Informasi Teks", explanation: "Taman nasional didirikan sebagai pusat konservasi perlindungan satwa." },
-      { id: 10, type: "PG", text: "Kalimat yang termasuk jenis kalimat fakta adalah ....", options: ["Gunung Merapi adalah gunung api aktif di Pulau Jawa", "Menurutku pemandangan pantai ini sangat indah", "Alangkah indahnya ciptaan Tuhan ini!", "Semoga kita semua selalu diberikan kesehatan."], correct: 0, topic: "Fakta dan Opini", explanation: "Kalimat fakta menyajikan kenyataan yang terbukti kebenarannya." },
-      { id: 11, type: "PG", text: "Urutan kalimat acak laporan literasi pagi Jumat yang padu adalah (2. Kegiatan literasi di lapangan, 4. Siswa wajib bawa buku, 3. Guru mendampingi, 1. Menulis ringkasan) ....", options: ["2 - 4 - 1 - 3", "2 - 4 - 3 - 1", "4 - 2 - 3 - 1", "4 - 1 - 2 - 3"], correct: 1, topic: "Menyusun Paragraf", explanation: "Susunan logis dimulai dari waktu kegiatan, kewajiban siswa, pendampingan guru, hingga penutupan." },
-      { id: 12, type: "PG", text: "Kalimat utama paragraf tentang Rendra yang disiplin memanfaatkan waktu luang terletak di ....", options: ["Awal paragraf", "Akhir paragraf", "Tengah paragraf", "Seluruh kalimat"], correct: 0, topic: "Kalimat Utama", explanation: "Kalimat utama terletak di awal (deduktif) mengenai kedisiplinan Rendra." },
-      { id: 13, type: "PG", text: "Manakah yang merupakan contoh kalimat langsung?", options: ["Dia berkata bahwa dia senang belajar.", "\"Ayo pergi bermain ke taman!\" seru Ani.", "Dia bertanya apakah kami akan datang.", "Mereka berjanji akan hadir minggu depan."], correct: 1, topic: "Kalimat Langsung", explanation: "Kalimat langsung ditandai dengan penggunaan tanda petik dua." },
-      { id: 14, type: "PG", text: "Mengungkapkan sesuatu dengan perbandingan langsung atas dasar sifat yang sama disebut majas ....", options: ["Personifikasi", "Metafora", "Asosiasi", "Hiperbola"], correct: 1, topic: "Majas", explanation: "Perbandingan langsung tanpa pembanding disebut majas metafora." },
-      { id: 15, type: "PG", text: "\"Pohon nyiur melambai-lambai tertiup angin.\" Kalimat tersebut menggunakan majas ....", options: ["Personifikasi", "Metafora", "Asosiasi", "Hiperbola"], correct: 0, topic: "Majas Personifikasi", explanation: "Benda mati yang berperilaku seperti makhluk hidup adalah personifikasi." },
+      { 
+        id: 4, type: "PG", 
+        text: "<b>Berdasarkan teks tentang masyarakat Baduy pada soal nomor 3 di atas, ide pokok paragraf tersebut adalah ....</b>", 
+        options: ["Makna seragam masyarakat Baduy", "Seragam Baduy Dalam", "Seragam Baduy Luar", "Baju dan ikat kepala masyarakat Baduy"], 
+        correct: 0, topic: "Ide Pokok", explanation: "Ide pokok mencakup keseluruhan makna seragam masyarakat Baduy." 
+      },
+      { 
+        id: 5, type: "PG", 
+        text: "<b>Perhatikan Data Isian Formulir berikut!</b><br>1) Jalan Gagak 7 Bandung<br>2) Islam<br>3) SMA<br>4) Agus Santoso<br>5) Laki-laki<br>6) Bandung, 25 Agustus 1983<br><br><b>Pengisian KTP yang tepat urutannya sesuai data di atas adalah ....</b>", 
+        options: ["4 - 3 - 2 - 1 - 5 - 6", "4 - 6 - 5 - 3 - 1 - 2", "4 - 5 - 3 - 2 - 1 - 6", "4 - 6 - 5 - 3 - 2 - 1 (Nama, TTL, Kelamin, Pendidikan, Agama, Alamat)"], 
+        correct: 1, topic: "Pengisian Formulir", explanation: "Urutan data diri yang logis pada formulir: Nama (4), Tempat Tanggal Lahir (6), Jenis Kelamin (5), Pendidikan (3), Agama (2), Alamat Rumah (1). (Kunci: 4 - 6 - 5 - 3 - 2 - 1)." 
+      },
+      { 
+        id: 6, type: "PG", 
+        text: "<b>Bacalah pantun berikut!</b><br>Ke timur membeli kain sutra,<br>Kain ditenun indah polanya.<br>Jangan malas membaca buku, saudara,<br>Karena buku jendela dunia.<br><br><b>Pesan yang terkandung dalam pantun tersebut adalah ....</b>", 
+        options: ["Buku hanya boleh dibeli dan dibaca orang kaya", "Kita tidak boleh malas membaca buku karena buku adalah sumber ilmu", "Membaca buku harus di perpustakaan besar", "Buku adalah barang mahal"], 
+        correct: 1, topic: "Amanat Pantun", explanation: "Isi pantun menasihati kita agar gemar membaca buku." 
+      },
+      { 
+        id: 7, type: "PG", 
+        text: "<b>Perhatikan teks wawancara berikut!</b><br>Wulan: 'Permisi Bu, maaf mengganggu. Saya mendapat tugas dari guru untuk mewawancarai wiraswasta sebagai narasumber. Apakah ibu bersedia untuk diwawancarai?'<br>Bu Ani: 'Silakan, nak'<br>Wulan: 'Apakah bisnis makanan ringan yang Bu Ani geluti?'<br>Bu Ani: 'Kerupuk atau kemplang ikan cap Ampera.'<br>Wulan: 'Sejak kapan Ibu menggeluti usaha makanan ini?'<br>Bu Ani: 'Sejak tahun 2006'<br><br><b>Siapa tokoh utama yang ada di dalam teks wawancara tersebut?</b>", 
+        options: ["Wulan", "Bu Ani", "Wulan dan Bu Ani", "Pak Wahyu dan Wiwin"], 
+        correct: 2, topic: "Tokoh Wawancara", explanation: "Tokoh yang terlibat adalah Wulan dan Bu Ani." 
+      },
+      { 
+        id: 8, type: "PG", 
+        text: "<b>Mengapa penting untuk menyusun daftar pertanyaan sebelum melakukan kegiatan wawancara dengan narasumber?</b>", 
+        options: ["Agar pewawancara terlihat tidak terorganisir", "Agar wawancara berlangsung terlalu lama dan membosankan", "Agar pertanyaan dapat mengarahkan percakapan ke topik yang diinginkan", "Agar narasumber merasa tidak dihargai waktunya"], 
+        correct: 2, topic: "Teknik Wawancara", explanation: "Pertanyaan terstruktur memastikan topik dibahas secara komprehensif." 
+      },
+      { 
+        id: 9, type: "PG", 
+        text: "<b>Bacalah teks berikut!</b><br>Apakah kamu tahu tempat perlindungan hewan yang sangat terkenal di Provinsi Lampung? Ya, tempat itu adalah Taman Nasional Way Kambas. Taman nasional ini didirikan khusus sebagai pusat konservasi untuk melindungi hewan-hewan langka yang terancam punah, terutama gajah sumatra...<br><br><b>Taman Nasional Way Kambas didirikan pemerintah dengan tujuan utama untuk ....</b>", 
+        options: ["Memburu gajah dan harimau sumatra", "Pusat konservasi melindungi hewan langka", "Tempat pariwisata komersial", "Menanam pohon bakau"], 
+        correct: 1, topic: "Informasi Teks", explanation: "Taman nasional didirikan sebagai pusat konservasi perlindungan satwa." 
+      },
+      { 
+        id: 10, type: "PG", 
+        text: "<b>Manakah di bawah ini yang merupakan contoh kalimat fakta?</b>", 
+        options: ["Gunung Merapi adalah gunung api aktif yang terletak di Pulau Jawa", "Menurutku pemandangan pantai ini sangat indah sekali", "Alangkah indahnya ciptaan Tuhan yang luar biasa ini!", "Semoga kita semua selalu diberikan kesehatan dan keselamatan."], 
+        correct: 0, topic: "Fakta dan Opini", explanation: "Kalimat fakta menyajikan kenyataan yang terbukti kebenarannya secara objektif." 
+      },
+      { 
+        id: 11, type: "PG", 
+        text: "<b>Perhatikan kalimat acak laporan literasi berikut!</b><br>1) Setelah selesai membaca buku, kami menuliskan ringkasan singkat di jurnal literasi masing-masing.<br>2) Setiap hari Jumat pagi, sekolah kami mengadakan kegiatan literasi bersama di lapangan.<br>3) Bapak dan Ibu Guru juga ikut mendampingi sambil sesekali berdiskusi dengan siswa tentang buku yang dibaca.<br>4) Semua siswa diwajibkan membawa satu buku cerita atau buku pengetahuan umum dari rumah.<br><br><b>Urutan kalimat acak tersebut agar menjadi paragraf laporan yang padu adalah ....</b>", 
+        options: ["2 - 4 - 1 - 3", "2 - 4 - 3 - 1", "4 - 2 - 3 - 1", "4 - 1 - 2 - 3"], 
+        correct: 1, topic: "Menyusun Paragraf", explanation: "Susunan logis dimulai dari waktu kegiatan (2), kewajiban bawa buku (4), pendampingan guru (3), hingga penutupan menulis ringkasan (1). Kunci: 2 - 4 - 3 - 1." 
+      },
+      { 
+        id: 12, type: "PG", 
+        text: "<b>Bacalah paragraf berikut!</b><br>Rendra dikenal sebagai siswa yang sangat disiplin dalam memanfaatkan waktu luangnya di sekolah. Saat jam istirahat tiba, ia lebih memilih membaca buku ensiklopedia di pojok literasi kelas daripada bermain di luar. Ketika guru belum datang, ia juga sering terlihat mengulang kembali materi pelajaran yang baru saja diajarkan. Bahkan, sepulang sekolah pun Rendra selalu menyempatkan diri untuk merapikan catatan belajarnya agar lebih mudah dipahami di rumah.<br><br><b>Kalimat utama dari paragraf tersebut adalah ....</b>", 
+        options: ["Rendra dikenal sebagai siswa yang sangat disiplin dalam memanfaatkan waktu luangnya di sekolah.", "Saat jam istirahat tiba, ia lebih memilih membaca buku ensiklopedia di pojok literasi kelas.", "Ketika guru belum datang, ia juga sering terlihat mengulang kembali materi pelajaran.", "Bahkan, sepulang sekolah pun Rendra selalu menyempatkan diri merapikan catatan."], 
+        correct: 0, topic: "Kalimat Utama", explanation: "Kalimat utama terletak di awal (deduktif) mengenai kedisiplinan Rendra." 
+      },
+      { 
+        id: 13, type: "PG", 
+        text: "<b>Manakah di antara kalimat-kalimat berikut yang merupakan contoh dari kalimat langsung?</b>", 
+        options: ["Dia berkata bahwa dia senang belajar matematika.", "\"Ayo pergi bermain ke taman!\" seru Ani.", "Dia bertanya apakah mereka akan mengadakan pesta.", "Mereka berjanji akan datang ke pesta ulang tahun minggu depan."], 
+        correct: 1, topic: "Kalimat Langsung", explanation: "Kalimat langsung ditandai dengan penggunaan tanda petik dua dan intonasi penutur asli." 
+      },
+      { 
+        id: 14, type: "PG", 
+        text: "<b>Mengungkapkan sesuatu dengan perbandingan langsung atas dasar sifat yang sama atau hampir sama disebut majas ....</b>", 
+        options: ["Personifikasi", "Metafora", "Asosiasi", "Hiperbola"], 
+        correct: 1, topic: "Majas", explanation: "Perbandingan langsung tanpa pembanding disebut majas metafora." 
+      },
+      { 
+        id: 15, type: "PG", 
+        text: "<b>\"Pohon nyiur melambai-lambai tertiup angin.\" Kalimat tersebut merupakan contoh kalimat bermajas ....</b>", 
+        options: ["Personifikasi", "Metafora", "Asosiasi", "Hiperbola"], 
+        correct: 0, topic: "Majas Personifikasi", explanation: "Benda mati yang berperilaku seperti makhluk hidup adalah personifikasi." 
+      },
 
       { 
         type: "MCMA", id: 16, 
-        text: "Pilihlah semua pernyataan yang merupakan simpulan peristiwa Asal-usul Pulau Kemaro yang tepat! (Jawaban benar lebih dari satu)",
+        text: "<b>Bacalah teks Asal-usul Pulau Kemaro!</b><br>Pangeran Tan Bun An dari Tiongkok jatuh cinta kepada Siti Fatimah... Merasa dihina karena guci berisi sawi asin, ia membuang guci ke sungai. Padahal di bawahnya terdapat emas permata... Siti Fatimah yang sangat berduka ikut melompat ke sungai demi cinta sejatinya, hingga muncul Pulau Kemaro.<br><br><b>Pilihlah semua pernyataan yang merupakan simpulan peristiwa yang tepat! (Jawaban benar lebih dari satu)</b>",
         options: [
-          "Tragedi tenggelamnya Pangeran dipicu sifat terburu-buru prasangka buruk tanpa memeriksa guci.",
-          "Siti Fatimah ikut melompat ke sungai karena ingin menyelamatkan guci emas.",
-          "Kemunculan Pulau Kemaro disimbolkan sebagai keabadian cinta sejati."
+          "Tragedi tenggelamnya Pangeran dipicu sifat terburu-buru prasangka buruk tanpa memeriksa isi guci.",
+          "Siti Fatimah ikut melompat ke sungai karena ia ingin menyelamatkan guci-guci berisi emas.",
+          "Kemunculan Pulau Kemaro disimpulkan sebagai bentuk keabadian cinta sejati."
         ],
         correct: [0, 2], topic: "Simpulan Cerita", explanation: "Pernyataan 1 dan 3 benar sesuai alur cerita." 
       },
       { 
         type: "MCMA", id: 17, 
-        text: "Pilihlah semua pesan atau amanat yang terkandung dalam puisi persahabatan 'Sahabat Sejatiku'! (Jawaban benar lebih dari satu)",
+        text: "<b>Perhatikan puisi 'Sahabat Sejatiku'!</b><br>Aku sedih, kau menghibur... Kau bagai malaikat bagiku... Satu pintaku untukmu yaitu janji selalu erat tak pernah terpisah seumur hidup kita.<br><br><b>Pilihlah semua pesan atau amanat yang terkandung dalam puisi tersebut! (Jawaban benar lebih dari satu)</b>",
         options: [
           "Kita harus selalu ada untuk menghibur dan membantu sahabat yang kesulitan.",
-          "Sesama sahabat harus saling menjaga kesetiaan agar tidak terpisahkan.",
-          "Kita tidak boleh berteman dengan orang yang tidak sempurna."
+          "Sesama sahabat harus saling menjaga kesetiaan agar persahabatan tidak terpisahkan.",
+          "Kita tidak boleh berteman dengan orang yang tidak memiliki sifat sempurna seperti malaikat."
         ],
         correct: [0, 1], topic: "Amanat Puisi", explanation: "Pernyataan 1 dan 2 sesuai dengan isi puisi." 
       },
       { 
         type: "MCMA", id: 18, 
-        text: "Perubahan apa saja yang terjadi pada Pantai Lestari berdasarkan teks? (Jawaban benar lebih dari satu)",
+        text: "<b>Bacalah teks 'Wajah Baru Pantai Lestari'!</b><br>Beberapa tahun lalu Pantai Lestari rawan abrasi merusak pondok nelayan. Kini warga bergotong royong menanam mangrove, akar bakau menahan ombak, suasana menjadi hijau dan asri sebagai tempat wisata edukasi.<br><br><b>Perubahan apa saja yang terjadi pada Pantai Lestari? (Jawaban benar lebih dari satu)</b>",
         options: [
-          "Dari daerah pesisir yang rawan abrasi menjadi kawasan hijau terlindung.",
-          "Dari tempat yang merusak pondok nelayan menjadi kawasan wisata edukasi asri.",
-          "Dari pantai tempat berkembangbiaknya ikan besar menjadi bendungan air."
+          "Dari daerah pesisir yang rawan abrasi menjadi kawasan hijau terlindung dari ombak besar.",
+          "Dari tempat yang merusak pondok nelayan menjadi kawasan wisata edukasi yang asri.",
+          "Dari pantai tempat berkembang biaknya ikan besar menjadi area bendungan air laut."
         ],
         correct: [0, 1], topic: "Informasi Teks", explanation: "Pernyataan 1 dan 2 mencerminkan perubahan positif pantai." 
       },
       { 
         type: "MCMA", id: 19, 
-        text: "Manakah yang merupakan tujuan dan isi pesan dari poster 'BUANG SAMPAH PADA TEMPATNYA'? (Jawaban benar lebih dari satu)",
+        text: "<b>Perhatikan poster 'BUANG SAMPAH PADA TEMPATNYA'!</b><br><br><b>Berdasarkan poster tersebut, manakah pernyataan yang merupakan tujuan dan isi pesan pembuat poster? (Jawaban benar lebih dari satu)</b>",
         options: [
           "Mengajak warga agar selalu membuang sampah pada tempatnya demi kenyamanan bersama.",
-          "Menyampaikan pesan bahwa lingkungan bersih membuat suasana beraktivitas lebih nyaman.",
-          "Menginformasikan jadwal kerja bakti dan harga tong sampah plastik terbaru."
+          "Menyampaikan pesan bahwa lingkungan bersih akan membuat suasana beraktivitas lebih nyaman.",
+          "Menginformasikan kepada pembaca mengenai jadwal kerja bakti dan harga tong sampah terbaru."
         ],
         correct: [0, 1], topic: "Pesan Poster", explanation: "Pernyataan 1 dan 2 adalah tujuan utama poster imbauan." 
       },
       { 
         type: "MCMA", id: 20, 
-        text: "Hewan langka apa saja yang dilindungi di pusat konservasi Taman Nasional Way Kambas? (Jawaban benar lebih dari satu)",
+        text: "<b>Bacalah teks Taman Nasional Way Kambas!</b><br>Taman nasional ini didirikan sebagai pusat konservasi melindungi hewan langka seperti gajah sumatra, badak sumatra, dan harimau sumatra.<br><br><b>Apa saja hewan langka yang dilindungi di pusat konservasi tersebut? (Jawaban benar lebih dari satu)</b>",
         options: ["Gajah sumatra", "Badak sumatra", "Kanguru pohon"],
         correct: [0, 1], topic: "Fauna Dilindungi", explanation: "Gajah dan badak sumatra adalah satwa yang dilindungi di Way Kambas." 
       },
       { 
         type: "MCMA", id: 21, 
-        text: "Manakah kegiatan sehari-hari yang sesuai dengan pesan kebaikan dari cerita Gupi si Kelinci? (Jawaban benar lebih dari satu)",
+        text: "<b>Bacalah cerita Gupi si Kelinci yang pelit dan akhirnya menjadi dermawan setelah dinasihati tupai!</b><br><br><b>Manakah kegiatan sehari-hari yang sesuai dengan pesan kebaikan dari cerita Gupi tersebut? (Jawaban benar lebih dari satu)</b>",
         options: [
-          "Menyisihkan makanan untuk dibagi kepada teman yang lupa membawa bekal.",
-          "Segera meminta maaf dan menepati janji mengembalikan buku tepat waktu.",
-          "Memilih-milih teman dan hanya mau berbagi dengan anak yang kaya."
+          "Menyisihkan sebagian uang jajan atau makanan untuk dibagikan kepada teman yang lupa bekal.",
+          "Segera meminta maaf dan menepati janji untuk mengembalikan buku pelajaran tepat waktu.",
+          "Memilih-milih teman bermain dan hanya mau berbagi dengan anak yang kaya atau membawa mainan bagus."
         ],
         correct: [0, 1], topic: "Nilai Moral", explanation: "Berbagi dan menepati janji adalah contoh perilaku terpuji." 
       },
       { 
         type: "MCMA", id: 22, 
-        text: "Informasi penting manakah yang terdapat dalam biografi singkat Thomas Alfa Edison? (Jawaban benar lebih dari satu)",
+        text: "<b>Bacalah biografi singkat Thomas Alfa Edison!</b><br>Thomas Alfa Edison dilahirkan di Milan, Ohio pada 11 Februari 1847. Ia dikenal sebagai penemu paling produktif memegang 1.093 paten atas namanya.<br><br><b>Informasi penting manakah yang terdapat dalam teks tersebut? (Jawaban benar lebih dari satu)</b>",
         options: [
-          "Dilahirkan di Milan, Ohio pada 11 Februari 1847.",
-          "Dikenal sebagai penemu paling produktif memegang 1.093 paten.",
-          "Thomas Alfa Edison adalah penemu pertama roda ban."
+          "Thomas Alfa Edison dilahirkan di Milan, Ohio pada 11 Februari 1847.",
+          "Thomas Alfa Edison dikenal sebagai penemu paling produktif memegang 1.093 paten.",
+          "Thomas Alfa Edison adalah penemu pertama kali roda ban kendaraan."
         ],
         correct: [0, 1], topic: "Informasi Tokoh", explanation: "Kelahiran dan rekor paten adalah fakta penting penemu tersebut." 
       },
       { 
         type: "MCMA", id: 23, 
-        text: "Pilihlah semua unsur intrinsik yang biasanya membangun sebuah cerita fiksi atau dongeng! (Jawaban benar lebih dari satu)",
-        options: ["Tema dan Alur cerita", "Tokoh dan Penokohan", "Rumus volume tabung"],
+        text: "<b>Pilihlah semua unsur intrinsik yang biasanya membangun sebuah cerita fiksi atau dongeng! (Jawaban benar lebih dari satu)</b>",
+        options: ["Tema dan Alur cerita", "Tokoh dan Penokohan", "Rumus volume tabung lingkaran"],
         correct: [0, 1], topic: "Unsur Intrinsik", explanation: "Tema, alur, tokoh, dan latar adalah unsur intrinsik cerita." 
       },
       { 
         type: "MCMA", id: 24, 
-        text: "Pilihlah semua ciri-ciri kebahasaan yang terdapat dalam teks laporan hasil pengamatan! (Jawaban benar lebih dari satu)",
-        options: ["Menggunakan bahasa yang objektif", "Disusun berdasarkan fakta", "Mengandung unsur rayuan iklan"],
+        text: "<b>Pilihlah semua ciri-ciri kebahasaan yang terdapat dalam teks laporan hasil pengamatan! (Jawaban benar lebih dari satu)</b>",
+        options: ["Menggunakan bahasa yang objektif", "Disusun berdasarkan fakta", "Mengandung unsur rayuan iklan komersial"],
         correct: [0, 1], topic: "Ciri Teks Laporan", explanation: "Teks laporan bersifat objektif dan berdasarkan fakta nyata." 
       },
 
@@ -647,7 +716,7 @@
       }
     };
 
-    let selectedSubject = 'matematika';
+    let selectedSubject = 'indonesia';
     let currentPackageKey = 'DEMO';
     let currentQuestions = [];
     let currentUser = { name: '', school: '', className: '', absen: '' };
@@ -821,7 +890,7 @@
       document.getElementById('examStudentSchool').innerText = `${currentUser.school} • Kelas ${currentUser.className}`;
       
       userAnswers = {}; raguStatus = {}; currentQuestionIdx = 0;
-      const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_MATEMATIKA_UTUH;
+      const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_BAHASA_UTUH;
       currentQuestions = shuffleArray(rawQuestions);
 
       persistCurrentExamState();
@@ -1136,11 +1205,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       syncExamSettings();
-      // Hanya cek sesi jika benar-benar ada ujian yang belum selesai tersimpan
-      const saved = localStorage.getItem('tka_active_exam_session_demak');
-      if (saved) {
-        checkActiveExamSession();
-      }
+      checkActiveExamSession();
     });
   </script>
 </body>
