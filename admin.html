@@ -71,10 +71,11 @@
       <button onclick="switchAdminSubject('indonesia')" id="btnSubIndo" class="px-4 py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-sm transition">Bahasa Indonesia (Demo + Paket 1-14)</button>
     </div>
 
-    <!-- KONTROL KUNCI & TOKEN -->
+    <!-- KONTROL KUNCI & TOKEN (Tombol terkunci Kuning Emas, Terbuka Biru Langit) -->
     <div class="bg-white/95 p-6 rounded-3xl border border-teal-200/80 shadow-sm no-print">
-      <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mb-1" id="lockSectionTitle">Kontrol Token: Bahasa Indonesia</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-4" id="adminLockControls"></div>
+      <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mb-1" id="lockSectionTitle">Kontrol Kunci & Token Paket</h3>
+      <p class="text-xs text-slate-500 mb-4">Atur status buka/kunci dan token ujian peserta secara instan.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" id="adminLockControls"></div>
     </div>
 
     <!-- TAB MENU NAVIGASI -->
@@ -142,12 +143,12 @@
       </div>
     </div>
 
-    <!-- VIEW 3: ANALISIS BUTIR SOAL -->
+    <!-- VIEW 3: ANALISIS BUTIR SOAL (SPESIFIK PER MAPEL DAN PER PAKET) -->
     <div id="viewAnalysisSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
-          <h3 class="text-base font-black text-slate-900" id="analysisHeaderTitle">Analisis Butir Soal</h3>
-          <p class="text-xs text-slate-500 mt-0.5">Menampilkan tingkat kesulitan dan daya serap berdasarkan mata pelajaran dan paket terpilih.</p>
+          <h3 class="text-base font-black text-slate-900" id="analysisHeaderTitle">Analisis Butir Soal Terperinci</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Analisis tingkat kesulitan soal dipisahkan secara spesifik berdasarkan paket dan mata pelajaran yang dipilih.</p>
         </div>
         <span id="analysisBadge" class="px-3 py-1 rounded-xl text-xs font-black bg-teal-100 text-teal-900 border border-teal-200 shadow-sm self-start sm:self-auto">
           Mapel: Bahasa Indonesia | Paket: DEMO
@@ -159,6 +160,7 @@
             <tr class="bg-teal-100/80 text-[11px] font-black text-teal-950 uppercase tracking-wider border-b border-teal-200">
               <th class="py-3 px-3 text-center w-16">No Soal</th>
               <th class="py-3 px-4">Materi / Indikator Soal</th>
+              <th class="py-3 px-3 text-center">Jumlah Benar</th>
               <th class="py-3 px-3 text-center">Daya Serap (%)</th>
               <th class="py-3 px-4 text-center">Tingkat Kesulitan</th>
             </tr>
@@ -176,12 +178,76 @@
 
   <script>
     const FIREBASE_DB_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/nilai_tryout.json";
+    const FIREBASE_SETTINGS_URL = "https://tka-kab-demak-2026-default-rtdb.asia-southeast1.firebasedatabase.app/pengaturan_ujian.json";
     const ADMIN_AUTH = { username: "admin", password: "123" };
 
     let currentAdminSubject = 'indonesia';
-    let selectedPackageFilter = 'ALL';
+    let selectedPackageFilter = 'DEMO';
     let currentViewMode = 'students';
     let isAdminLoggedIn = sessionStorage.getItem('tka_admin_auth') === 'true';
+
+    const DEFAULT_PACKAGE_STATUS = {
+      matematika: { "DEMO": true, "Paket 1": true, "Paket 2": true, "Paket 3": true, "Paket 4": true, "Paket 5": true, "Paket 6": true, "Paket 7": true, "Paket 8": true, "Paket 9": true, "Paket 10": true, "Paket 11": true, "Paket 12": true, "Paket 13": true, "Paket 14": true },
+      indonesia: { "DEMO": true, "Paket 1": true, "Paket 2": true, "Paket 3": true, "Paket 4": true, "Paket 5": true, "Paket 6": true, "Paket 7": true, "Paket 8": true, "Paket 9": true, "Paket 10": true, "Paket 11": true, "Paket 12": true, "Paket 13": true, "Paket 14": true }
+    };
+    const DEFAULT_PACKAGE_TOKENS = {
+      matematika: { "DEMO": "GENWALI", "Paket 1": "GENWALI", "Paket 2": "GENWALI", "Paket 3": "GENWALI", "Paket 4": "GENWALI", "Paket 5": "GENWALI", "Paket 6": "GENWALI", "Paket 7": "GENWALI", "Paket 8": "GENWALI", "Paket 9": "GENWALI", "Paket 10": "GENWALI", "Paket 11": "GENWALI", "Paket 12": "GENWALI", "Paket 13": "GENWALI", "Paket 14": "GENWALI" },
+      indonesia: { "DEMO": "GENWALI", "Paket 1": "GENWALI", "Paket 2": "GENWALI", "Paket 3": "GENWALI", "Paket 4": "GENWALI", "Paket 5": "GENWALI", "Paket 6": "GENWALI", "Paket 7": "GENWALI", "Paket 8": "GENWALI", "Paket 9": "GENWALI", "Paket 10": "GENWALI", "Paket 11": "GENWALI", "Paket 12": "GENWALI", "Paket 13": "GENWALI", "Paket 14": "GENWALI" }
+    };
+
+    function getPackageStatus() {
+      const stored = localStorage.getItem('tka_pkg_status_demak');
+      return stored ? JSON.parse(stored) : DEFAULT_PACKAGE_STATUS;
+    }
+    function savePackageStatus(s) {
+      localStorage.setItem('tka_pkg_status_demak', JSON.stringify(s));
+      renderAdminLockControls();
+    }
+    function getPackageTokens() {
+      const stored = localStorage.getItem('tka_pkg_tokens_demak');
+      return stored ? JSON.parse(stored) : DEFAULT_PACKAGE_TOKENS;
+    }
+
+    async function setPackageToken(pkg, val) {
+      const tokens = getPackageTokens();
+      if (!tokens[currentAdminSubject]) tokens[currentAdminSubject] = {};
+      tokens[currentAdminSubject][pkg] = (val || "GENWALI").trim().toUpperCase();
+      localStorage.setItem('tka_pkg_tokens_demak', JSON.stringify(tokens));
+      try {
+        await fetch(FIREBASE_SETTINGS_URL, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tokens: tokens })
+        });
+      } catch (err) { console.warn("Gagal simpan token cloud:", err); }
+      renderAdminLockControls();
+    }
+
+    async function togglePackageLock(pkg) {
+      const s = getPackageStatus();
+      if (!s[currentAdminSubject]) s[currentAdminSubject] = {};
+      s[currentAdminSubject][pkg] = !s[currentAdminSubject][pkg];
+      savePackageStatus(s);
+      try {
+        await fetch(FIREBASE_SETTINGS_URL, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: s })
+        });
+      } catch (err) { console.warn("Gagal simpan status cloud:", err); }
+    }
+
+    async function fetchCloudSettings() {
+      try {
+        const res = await fetch(FIREBASE_SETTINGS_URL);
+        const data = await res.json();
+        if (data) {
+          if (data.status) localStorage.setItem('tka_pkg_status_demak', JSON.stringify(data.status));
+          if (data.tokens) localStorage.setItem('tka_pkg_tokens_demak', JSON.stringify(data.tokens));
+        }
+      } catch (e) { console.warn("Offline pengaturan cloud:", e); }
+      renderAdminLockControls();
+    }
 
     function handleAdminLogin(e) {
       e.preventDefault();
@@ -194,6 +260,7 @@
         document.getElementById('adminPortal').classList.remove('hidden');
         renderFilterTabs();
         renderAdminDashboard();
+        fetchCloudSettings();
         syncOnlineData();
       } else {
         document.getElementById('loginErrorMsg').classList.remove('hidden');
@@ -207,7 +274,7 @@
 
     function switchAdminSubject(sub) {
       currentAdminSubject = sub;
-      selectedPackageFilter = 'ALL';
+      selectedPackageFilter = 'DEMO';
       document.getElementById('btnSubMat').className = sub === 'matematika'
         ? "px-4 py-2 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm transition"
         : "px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
@@ -221,10 +288,10 @@
     function renderFilterTabs() {
       const container = document.getElementById('packageFilterTabs');
       container.innerHTML = '';
-      const packageKeys = ["ALL", "DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
+      const packageKeys = ["DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
       packageKeys.forEach(p => {
         const btn = document.createElement('button');
-        btn.innerText = p === 'ALL' ? 'Semua Paket' : p;
+        btn.innerText = p;
         btn.className = selectedPackageFilter === p
           ? "px-3 py-1.5 rounded-xl text-xs font-black bg-teal-600 text-white shadow-sm"
           : "px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
@@ -233,19 +300,34 @@
       });
     }
 
+    // RENDER KONTROL TOKEN: Terkunci = Kuning Emas, Terbuka = Biru Langit
     function renderAdminLockControls() {
+      const statusMap = getPackageStatus()[currentAdminSubject] || {};
+      const tokenMap = getPackageTokens()[currentAdminSubject] || {};
       const container = document.getElementById('adminLockControls');
       container.innerHTML = '';
       const packageKeys = ["DEMO", "Paket 1", "Paket 2", "Paket 3", "Paket 4", "Paket 5", "Paket 6", "Paket 7", "Paket 8", "Paket 9", "Paket 10", "Paket 11", "Paket 12", "Paket 13", "Paket 14"];
+      
       packageKeys.forEach(pkg => {
+        const isOpen = statusMap[pkg] !== false;
+        const tokenVal = tokenMap[pkg] || "GENWALI";
         const box = document.createElement('div');
-        box.className = "p-3.5 rounded-2xl border text-center transition bg-blue-50 border-blue-200";
+        
+        // Warna latar: Terkunci = Kuning Emas (amber-100/amber-200), Terbuka = Biru Langit (sky-50/sky-200)
+        box.className = isOpen 
+          ? "p-3.5 rounded-2xl border text-center transition bg-sky-50 border-sky-200" 
+          : "p-3.5 rounded-2xl border text-center transition bg-amber-100 border-amber-300";
+        
         box.innerHTML = `
           <div class="flex items-center justify-between mb-1">
-            <span class="font-black text-xs text-blue-900">${pkg}</span>
-            <span class="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-blue-200 text-blue-950">GENWALI</span>
+            <span class="font-black text-xs ${isOpen ? 'text-sky-900' : 'text-amber-950'}">${pkg}</span>
+            <span class="text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${isOpen ? 'bg-sky-200 text-sky-950' : 'bg-amber-300 text-amber-950'}">${isOpen ? 'Terbuka' : 'Terkunci'}</span>
           </div>
-          <div class="text-left text-[11px] font-bold text-slate-600">Token: <span class="font-mono text-teal-700">GENWALI</span></div>
+          <div class="mb-2 text-left">
+            <label class="block text-[9px] font-extrabold uppercase text-slate-500 mb-0.5">Token Akses:</label>
+            <input type="text" value="${tokenVal}" class="w-full px-2 py-1 text-xs font-mono font-black uppercase rounded-lg border border-slate-300 outline-none text-center bg-white" onchange="setPackageToken('${pkg}', this.value)">
+          </div>
+          <button onclick="togglePackageLock('${pkg}')" class="w-full py-1.5 px-2 rounded-xl text-xs font-black transition shadow-sm ${isOpen ? 'bg-amber-400 hover:bg-amber-500 text-amber-950' : 'bg-sky-500 hover:bg-sky-600 text-white'}">${isOpen ? 'Kunci Paket' : 'Buka Paket'}</button>
         `;
         container.appendChild(box);
       });
@@ -291,8 +373,7 @@
     function renderAdminTable() {
       let submissions = getStoredSubmissions();
       const targetSubName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
-      submissions = submissions.filter(s => s.subject === targetSubName);
-      if (selectedPackageFilter !== 'ALL') submissions = submissions.filter(s => s.package === selectedPackageFilter);
+      submissions = submissions.filter(s => s.subject === targetSubName && s.package === selectedPackageFilter);
       
       const schoolFilter = (document.getElementById('adminFilterSchool').value || '').toLowerCase();
       const searchName = (document.getElementById('adminSearchInput').value || '').toLowerCase();
@@ -304,7 +385,7 @@
       const tbody = document.getElementById('adminTableBody');
       tbody.innerHTML = '';
       if (submissions.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="10" class="py-8 text-center text-slate-400 font-medium">Belum ada data nilai untuk ${targetSubName}.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" class="py-8 text-center text-slate-400 font-medium">Belum ada data nilai untuk ${targetSubName} (${selectedPackageFilter}).</td></tr>`;
         return;
       }
       submissions.forEach((s, idx) => {
@@ -332,8 +413,7 @@
     function renderSchoolRankingTable() {
       let submissions = getStoredSubmissions();
       const targetSubName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
-      submissions = submissions.filter(s => s.subject === targetSubName);
-      if (selectedPackageFilter !== 'ALL') submissions = submissions.filter(s => s.package === selectedPackageFilter);
+      submissions = submissions.filter(s => s.subject === targetSubName && s.package === selectedPackageFilter);
 
       const schoolStats = {};
       submissions.forEach(s => {
@@ -348,7 +428,7 @@
       const tbody = document.getElementById('schoolRankTableBody');
       tbody.innerHTML = '';
       if(schoolArray.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400 font-medium">Belum ada data peringkat sekolah.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400 font-medium">Belum ada data peringkat sekolah untuk ${selectedPackageFilter}.</td></tr>`;
         return;
       }
       schoolArray.forEach((sc, idx) => {
@@ -358,38 +438,41 @@
       });
     }
 
+    // ANALISIS BUTIR SOAL TERPERINCI PER PAKET DAN PER MAPEL
     function renderItemAnalysisTable() {
       const subName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
-      const pkgName = selectedPackageFilter === 'ALL' ? 'Semua Paket' : selectedPackageFilter;
       
       document.getElementById('analysisHeaderTitle').innerText = `Analisis Butir Soal - ${subName}`;
-      document.getElementById('analysisBadge').innerText = `Mapel: ${subName} | Paket: ${pkgName}`;
+      document.getElementById('analysisBadge').innerText = `Mapel: ${subName} | Paket: ${selectedPackageFilter}`;
+
+      let submissions = getStoredSubmissions();
+      submissions = submissions.filter(s => s.subject === subName && s.package === selectedPackageFilter);
+      const totalPart = submissions.length;
 
       const tbody = document.getElementById('analysisTableBody');
       tbody.innerHTML = '';
 
-      const topicsIndo = [
-        "Menentukan Karakter Tokoh (Laskar Pelangi)", "Analisis Sifat Tokoh Cerita", "Makna Simbolik Pakaian Adat Baduy", "Menentukan Ide Pokok Paragraf",
-        "Pengisian Formulir KTP yang Tepat", "Menentukan Amanat / Pesan Pantun", "Mengidentifikasi Tokoh Wawancara", "Teknik Penyusunan Pertanyaan Wawancara",
-        "Informasi Teks Taman Nasional Way Kambas", "Membedakan Kalimat Fakta dan Opini", "Menyusun Kalimat Acak Menjadi Paragraf", "Menentukan Kalimat Utama Paragraf",
-        "Mengidentifikasi Kalimat Langsung", "Pemahaman Majas Metafora", "Pemahaman Majas Personifikasi", "Simpulan Peristiwa Asal-usul Pulau Kemaro",
-        "Amanat Puisi Sahabat Sejatiku", "Analisis Perubahan Lingkungan Pantai Lestari", "Tujuan dan Pesan Poster Kebersihan", "Identifikasi Fauna Dilindungi Way Kambas",
-        "Penerapan Nilai Moral Cerita Gupi", "Analisis Biografi Thomas Alfa Edison", "Analisis Teks Informasi Taman Pintar", "Kosakata Khusus dan Umum Bidang Seni",
-        "Analisis Isi Wawancara Pengusaha Amplang", "Hikmah Teks Konservasi Way Kambas", "Nilai Moral dan Kepedulian Sesama", "Hikmah Legenda Gunung Bagus",
-        "Kaidah Kebahasaan dan Latar Klinik", "Kesimpulan Laporan Pengamatan Siswa"
-      ];
-
       for (let i = 1; i <= 30; i++) {
-        const topicText = currentAdminSubject === 'indonesia' ? (topicsIndo[i-1] || `Indikator Butir Soal ${i}`) : `Materi Soal Matematika ${i}`;
+        let correctCount = 0;
+        if (totalPart > 0) {
+          submissions.forEach(s => {
+            if (s.detailAnswers && s.detailAnswers[i] && s.detailAnswers[i].isCorrect) correctCount++;
+          });
+        }
+        const percentage = totalPart > 0 ? Math.round((correctCount / totalPart) * 100) : 100;
+        const diffText = percentage >= 75 ? 'Mudah' : (percentage >= 40 ? 'Sedang' : 'Sulit');
+        const badgeColor = percentage >= 75 ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-amber-100 text-amber-800 border-amber-200';
+
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
           <td class="py-3 px-3 text-center font-bold text-slate-800">${i}</td>
-          <td class="py-3 px-4 font-semibold text-slate-800">${topicText} (${subName} - ${pkgName})</td>
-          <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">100%</td>
+          <td class="py-3 px-4 font-semibold text-slate-800">Soal Nomor ${i} (${subName} - ${selectedPackageFilter})</td>
+          <td class="py-3 px-3 text-center font-bold text-slate-700">${totalPart > 0 ? `${correctCount} dari${totalPart} siswa` : `Simulasi`}</td>
+          <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">${percentage}%</td>
           <td class="py-3 px-4 text-center">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200">
-              Mudah
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black border ${badgeColor}">
+              ${diffText}
             </span>
           </td>
         `;
@@ -399,7 +482,8 @@
 
     function exportToCSV() {
       let submissions = getStoredSubmissions();
-      if (submissions.length === 0) { alert('Belum ada data!'); return; }
+      submissions = submissions.filter(s => s.package === selectedPackageFilter);
+      if (submissions.length === 0) { alert('Belum ada data pada paket ini!'); return; }
       let csv = 'Waktu,Mapel,Paket,Nama Siswa,Asal Sekolah,Skor Mentah,Nilai Akhir,Status\n';
       submissions.forEach(s => {
         csv += `"${s.date}","${s.subject}","${s.package}","${s.name}","${s.school}",${s.rawScore || 0},${s.finalScore},"${s.status}"\n`;
@@ -408,7 +492,7 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `Rekap_Nilai_Demak_${Date.now()}.csv`;
+      link.download = `Rekap_Nilai_${selectedPackageFilter}_${Date.now()}.csv`;
       link.click();
     }
 
@@ -436,6 +520,7 @@
         document.getElementById('adminPortal').classList.remove('hidden');
         renderFilterTabs();
         renderAdminDashboard();
+        fetchCloudSettings();
         syncOnlineData();
       }
     });
