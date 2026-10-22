@@ -157,7 +157,7 @@
       </form>
     </div>
 
-    <!-- SCREEN 3: CBT ENGINE (ANTI COPY-PASTE AKTIF) -->
+    <!-- SCREEN 3: CBT ENGINE -->
     <div id="viewExam" class="hidden relative z-20">
       <div class="bg-white/95 rounded-2xl p-4 mb-4 shadow-sm border border-teal-100 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center space-x-3">
@@ -454,7 +454,7 @@
       },
       { 
         id: 2, type: "PG", 
-        text: "<b>Berdasarkan teks cerita Laskar Pelangi pada soal sebelumnya (Bu Muslimah), sifat yang dimiliki oleh Bu Muslimah adalah sebagai berikut, KECUALI ....</b><br><br><i>(Diadaptasi dari novel Laskar Pelangi karya Andrea Hirata)</i>", 
+        text: "<b>Berdasarkan teks cerita Laskar Pelangi pada soal sebelumnya (Bu Muslimah), sifat yang dimiliki oleh Bu Muslimah adalah sebagai berikut, KECUALI ....</b>", 
         options: ["Sabar", "Bijaksana", "Selalu ada untuk para siswanya", "Cuek"], 
         correct: 3, topic: "Karakter Tokoh", explanation: "Sifat cuek tidak sesuai dengan Bu Muslimah yang sabar dan bijaksana." 
       },
@@ -491,7 +491,7 @@
       { 
         id: 8, type: "PG", 
         text: "<b>Mengapa sangat penting bagi seorang pewawancara untuk menyusun daftar pertanyaan terlebih dahulu sebelum menemui narasumber?</b>", 
-        options: ["Agar pewawancara terlihat tidak terorganisir", "Agar kegiatan wawancara berlangsung terlalu lama", "Agar pertanyaan dapat mengarahkan percakapan ke topik utama yang diinginkan", "Agar narasumber merasa tidak dihargai"], 
+        options: ["Agar pewawancara terlihat tidak terorganisir", "Agar kegiatan wawancara berlangsung terlalu lama", "Agar pertanyaan dapat mengarahkan percakapan ke topik utama yang diinginkan", "Agar narasumber merasa tidak dihargai waktunya"], 
         correct: 2, topic: "Teknik Wawancara", explanation: "Pertanyaan terstruktur memastikan topik dibahas secara komprehensif." 
       },
       { 
@@ -542,7 +542,7 @@
         text: "<b>Bacalah teks cerita 'Asal-usul Pulau Kemaro'!</b><br>Pangeran Tan Bun An membuang guci karena mengira hanya berisi sawi asin busuk. Padahal di bawahnya terdapat emas permata. Siti Fatimah ikut melompat ke sungai karena sangat berduka, hingga muncul Pulau Kemaro.<br><br><b>Pilihlah semua pernyataan yang merupakan simpulan peristiwa yang tepat! (Jawaban benar lebih dari satu)</b>",
         options: [
           "Tragedi tenggelamnya Pangeran dipicu sifat terburu-buru prasangka buruk tanpa memeriksa guci.",
-          "Siti Fatimah ikut melompat ke sungai karena ingin menyelamatkan guci berisi emas.",
+          "Siti Fatimah ikut melompat ke sungai karena ia ingin menyelamatkan guci berisi emas.",
           "Kemunculan Pulau Kemaro disimbolkan sebagai keabadian cinta sejati."
         ],
         correct: [0, 2], topic: "Simpulan Cerita", explanation: "Pernyataan 1 dan 3 benar sesuai alur cerita." 
@@ -597,22 +597,22 @@
         type: "MCMA", id: 22, 
         text: "<b>Bacalah biografi singkat Thomas Alfa Edison!</b><br>Thomas Alfa Edison dilahirkan di Milan, Ohio pada 11 Februari 1847. Ia dikenal sebagai penemu paling produktif memegang 1.093 paten atas namanya.<br><br><b>Informasi penting manakah yang terdapat dalam biografi singkat tersebut? (Jawaban benar lebih dari satu)</b>",
         options: [
-          "Thomas Alfa Edison dilahirkan di Milan, Ohio pada 11 Februari 1847.",
-          "Thomas Alfa Edison dikenal sebagai penemu paling produktif memegang 1.093 paten.",
-          "Thomas Alfa Edison adalah penemu pertama kali roda ban."
+          "Dilahirkan di Milan, Ohio pada 11 Februari 1847.",
+          "Dikenal sebagai penemu paling produktif memegang 1.093 paten.",
+          "Thomas Alfa Edison adalah penemu pertama roda ban."
         ],
         correct: [0, 1], topic: "Informasi Tokoh", explanation: "Kelahiran dan rekor paten adalah fakta penting penemu tersebut." 
       },
       { 
         type: "MCMA", id: 23, 
         text: "<b>Pilihlah semua unsur intrinsik yang biasanya membangun sebuah cerita fiksi atau dongeng! (Jawaban benar lebih dari satu)</b>",
-        options: ["Tema dan Alur cerita", "Tokoh dan Penokohan", "Rumus volume tabung lingkaran"],
+        options: ["Tema dan Alur cerita", "Tokoh dan Penokohan", "Rumus volume tabung"],
         correct: [0, 1], topic: "Unsur Intrinsik", explanation: "Tema, alur, tokoh, dan latar adalah unsur intrinsik cerita." 
       },
       { 
         type: "MCMA", id: 24, 
         text: "<b>Pilihlah semua ciri-ciri kebahasaan yang terdapat dalam teks laporan hasil pengamatan! (Jawaban benar lebih dari satu)</b>",
-        options: ["Menggunakan bahasa yang objektif", "Disusun berdasarkan fakta nyata", "Mengandung unsur rayuan iklan komersial"],
+        options: ["Menggunakan bahasa yang objektif", "Disusun berdasarkan fakta", "Mengandung unsur rayuan iklan"],
         correct: [0, 1], topic: "Ciri Teks Laporan", explanation: "Teks laporan bersifat objektif dan berdasarkan fakta nyata." 
       },
 
@@ -889,7 +889,7 @@
       document.getElementById('examStudentSchool').innerText = `${currentUser.school} • Kelas ${currentUser.className}`;
       
       userAnswers = {}; raguStatus = {}; currentQuestionIdx = 0;
-      const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_BAHASA_UTUH;
+      const rawQuestions = DATABASE_SOAL[selectedSubject][currentPackageKey].questions || SOAL_MATEMATIKA_UTUH;
       currentQuestions = shuffleArray(rawQuestions);
 
       persistCurrentExamState();
