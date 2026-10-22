@@ -71,7 +71,7 @@
       <button onclick="switchAdminSubject('indonesia')" id="btnSubIndo" class="px-4 py-2 rounded-xl text-xs font-black bg-emerald-500 text-white shadow-sm transition">Bahasa Indonesia (Demo + Paket 1-14)</button>
     </div>
 
-    <!-- KONTROL KUNCI & TOKEN (Tombol terkunci Kuning Emas, Terbuka Biru Langit) -->
+    <!-- KONTROL KUNCI & TOKEN -->
     <div class="bg-white/95 p-6 rounded-3xl border border-teal-200/80 shadow-sm no-print">
       <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mb-1" id="lockSectionTitle">Kontrol Kunci & Token Paket</h3>
       <p class="text-xs text-slate-500 mb-4">Atur status buka/kunci dan token ujian peserta secara instan.</p>
@@ -125,17 +125,30 @@
       </div>
     </div>
 
-    <!-- VIEW 2: REKAP PERINGKAT SEKOLAH -->
+    <!-- VIEW 2: REKAP PERINGKAT SEKOLAH (DENGAN PILIHAN MAPEL) -->
     <div id="viewSchoolsSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
-      <h3 class="text-base font-black text-slate-900">Rekapitulasi Peringkat SD Berdasarkan Nilai Rata-rata</h3>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 no-print">
+        <div>
+          <h3 class="text-base font-black text-slate-900">Rekapitulasi Peringkat SD Berdasarkan Nilai Rata-rata</h3>
+          <p class="text-xs text-slate-500">Pilih kategori mapel untuk melihat peringkat sekolah.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold text-slate-700">Kategori Peringkat:</label>
+          <select id="schoolSubjectFilter" onchange="renderSchoolRankingTable()" class="px-3 py-2 text-xs rounded-xl border border-teal-300 font-bold bg-teal-50 text-teal-900 outline-none cursor-pointer">
+            <option value="ALL">Gabungan 2 Mapel (Matematika & B. Indonesia)</option>
+            <option value="Matematika">Matematika Saja</option>
+            <option value="Bahasa Indonesia">Bahasa Indonesia Saja</option>
+          </select>
+        </div>
+      </div>
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-teal-100/80 text-[11px] font-black text-teal-950 uppercase tracking-wider border-b border-teal-200">
               <th class="py-3 px-3 text-center w-16">Peringkat</th>
               <th class="py-3 px-4">Nama Sekolah (SD/MI)</th>
-              <th class="py-3 px-3 text-center">Jumlah Peserta</th>
-              <th class="py-3 px-3 text-center bg-teal-200/60 text-teal-950">Rata-rata Sekolah</th>
+              <th class="py-3 px-3 text-center">Jumlah Peserta Ujian</th>
+              <th class="py-3 px-3 text-center bg-teal-200/60 text-teal-950">Rata-rata Gabungan / Mapel</th>
             </tr>
           </thead>
           <tbody id="schoolRankTableBody" class="text-xs divide-y divide-slate-100 text-slate-700"></tbody>
@@ -143,16 +156,33 @@
       </div>
     </div>
 
-    <!-- VIEW 3: ANALISIS BUTIR SOAL (SPESIFIK PER MAPEL DAN PER PAKET) -->
+    <!-- VIEW 3: ANALISIS BUTIR SOAL (DENGAN DROP BOX PILIH PAKET) -->
     <div id="viewAnalysisSection" class="hidden bg-white rounded-3xl border border-teal-200/80 shadow-md p-6 space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-3 no-print">
         <div>
           <h3 class="text-base font-black text-slate-900" id="analysisHeaderTitle">Analisis Butir Soal Terperinci</h3>
-          <p class="text-xs text-slate-500 mt-0.5">Analisis tingkat kesulitan soal dipisahkan secara spesifik berdasarkan paket dan mata pelajaran yang dipilih.</p>
+          <p class="text-xs text-slate-500 mt-0.5">Pilih paket soal melalui kotak drop box di samping untuk melihat analisis butirnya.</p>
         </div>
-        <span id="analysisBadge" class="px-3 py-1 rounded-xl text-xs font-black bg-teal-100 text-teal-900 border border-teal-200 shadow-sm self-start sm:self-auto">
-          Mapel: Bahasa Indonesia | Paket: DEMO
-        </span>
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold text-slate-700">Pilih Paket:</label>
+          <select id="analysisPackageDropdown" onchange="onAnalysisPackageChange()" class="px-4 py-2 text-xs rounded-xl border-2 border-teal-400 font-black bg-teal-50 text-teal-900 outline-none cursor-pointer shadow-sm">
+            <option value="DEMO">DEMO (Drilling)</option>
+            <option value="Paket 1">Paket 1</option>
+            <option value="Paket 2">Paket 2</option>
+            <option value="Paket 3">Paket 3</option>
+            <option value="Paket 4">Paket 4</option>
+            <option value="Paket 5">Paket 5</option>
+            <option value="Paket 6">Paket 6</option>
+            <option value="Paket 7">Paket 7</option>
+            <option value="Paket 8">Paket 8</option>
+            <option value="Paket 9">Paket 9</option>
+            <option value="Paket 10">Paket 10</option>
+            <option value="Paket 11">Paket 11</option>
+            <option value="Paket 12">Paket 12</option>
+            <option value="Paket 13">Paket 13</option>
+            <option value="Paket 14">Paket 14</option>
+          </select>
+        </div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
@@ -295,12 +325,12 @@
         btn.className = selectedPackageFilter === p
           ? "px-3 py-1.5 rounded-xl text-xs font-black bg-teal-600 text-white shadow-sm"
           : "px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
-        btn.onclick = () => { selectedPackageFilter = p; renderFilterTabs(); renderAdminTable(); if(currentViewMode === 'analysis') renderItemAnalysisTable(); };
+        btn.onclick = () => { selectedPackageFilter = p; renderFilterTabs(); renderAdminTable(); };
         container.appendChild(btn);
       });
     }
 
-    // RENDER KONTROL TOKEN: Terkunci = Kuning Emas, Terbuka = Biru Langit
+    // KONTROL KUNCI: Terkunci = Kuning Emas, Terbuka = Biru Langit
     function renderAdminLockControls() {
       const statusMap = getPackageStatus()[currentAdminSubject] || {};
       const tokenMap = getPackageTokens()[currentAdminSubject] || {};
@@ -313,7 +343,6 @@
         const tokenVal = tokenMap[pkg] || "GENWALI";
         const box = document.createElement('div');
         
-        // Warna latar: Terkunci = Kuning Emas (amber-100/amber-200), Terbuka = Biru Langit (sky-50/sky-200)
         box.className = isOpen 
           ? "p-3.5 rounded-2xl border text-center transition bg-sky-50 border-sky-200" 
           : "p-3.5 rounded-2xl border text-center transition bg-amber-100 border-amber-300";
@@ -360,7 +389,11 @@
       ['viewStudentsSection', 'viewSchoolsSection', 'viewAnalysisSection'].forEach(id => document.getElementById(id).classList.add('hidden'));
       if (mode === 'students') document.getElementById('viewStudentsSection').classList.remove('hidden');
       else if (mode === 'schools') { document.getElementById('viewSchoolsSection').classList.remove('hidden'); renderSchoolRankingTable(); }
-      else if (mode === 'analysis') { document.getElementById('viewAnalysisSection').classList.remove('hidden'); renderItemAnalysisTable(); }
+      else if (mode === 'analysis') { 
+        document.getElementById('viewAnalysisSection').classList.remove('hidden'); 
+        document.getElementById('analysisPackageDropdown').value = selectedPackageFilter;
+        renderItemAnalysisTable(); 
+      }
     }
 
     function renderAdminDashboard() {
@@ -410,43 +443,60 @@
       });
     }
 
+    // REKAP PERINGKAT SEKOLAH DENGAN PILIHAN MAPEL (Gabungan, Matematika, Bahasa Indonesia)
     function renderSchoolRankingTable() {
       let submissions = getStoredSubmissions();
-      const targetSubName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
-      submissions = submissions.filter(s => s.subject === targetSubName && s.package === selectedPackageFilter);
+      const filterType = document.getElementById('schoolSubjectFilter').value;
+
+      if (filterType !== 'ALL') {
+        submissions = submissions.filter(s => s.subject === filterType);
+      }
 
       const schoolStats = {};
       submissions.forEach(s => {
         const sch = s.school || 'Tanpa Sekolah';
+        let score = Number(s.finalScore) || 100;
         if (!schoolStats[sch]) schoolStats[sch] = { count: 0, totalScore: 0 };
         schoolStats[sch].count++;
-        schoolStats[sch].totalScore += (Number(s.finalScore) || 100);
+        schoolStats[sch].totalScore += score;
       });
-      const schoolArray = Object.keys(schoolStats).map(sch => ({ school: sch, count: schoolStats[sch].count, avg: (schoolStats[sch].totalScore / schoolStats[sch].count).toFixed(1) }));
+
+      const schoolArray = Object.keys(schoolStats).map(sch => ({
+        school: sch,
+        count: schoolStats[sch].count,
+        avg: (schoolStats[sch].totalScore / schoolStats[sch].count).toFixed(1)
+      }));
       schoolArray.sort((a,b) => b.avg - a.avg);
 
       const tbody = document.getElementById('schoolRankTableBody');
       tbody.innerHTML = '';
       if(schoolArray.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400 font-medium">Belum ada data peringkat sekolah untuk ${selectedPackageFilter}.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400 font-medium">Belum ada data rekap peringkat sekolah.</td></tr>`;
         return;
       }
       schoolArray.forEach((sc, idx) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="py-3 px-3 text-center font-bold">${idx + 1}</td><td class="py-3 px-4 font-black">${sc.school}</td><td class="py-3 px-3 text-center">${sc.count} Siswa</td><td class="py-3 px-3 text-center font-black text-teal-700">${sc.avg}</td>`;
+        tr.innerHTML = `<td class="py-3 px-3 text-center font-bold">${idx + 1}</td><td class="py-3 px-4 font-black">${sc.school}</td><td class="py-3 px-3 text-center">${sc.count} Data Ujian</td><td class="py-3 px-3 text-center font-black text-teal-700">${sc.avg}</td>`;
         tbody.appendChild(tr);
       });
     }
 
-    // ANALISIS BUTIR SOAL TERPERINCI PER PAKET DAN PER MAPEL
+    // ANALISIS BUTIR SOAL MENGGUNAKAN DROP BOX DI ATAS TABEL
+    function onAnalysisPackageChange() {
+      const dropdownVal = document.getElementById('analysisPackageDropdown').value;
+      selectedPackageFilter = dropdownVal;
+      renderItemAnalysisTable();
+    }
+
     function renderItemAnalysisTable() {
       const subName = currentAdminSubject === 'matematika' ? 'Matematika' : 'Bahasa Indonesia';
-      
+      const chosenPkg = document.getElementById('analysisPackageDropdown').value || selectedPackageFilter;
+
       document.getElementById('analysisHeaderTitle').innerText = `Analisis Butir Soal - ${subName}`;
-      document.getElementById('analysisBadge').innerText = `Mapel: ${subName} | Paket: ${selectedPackageFilter}`;
+      document.getElementById('analysisBadge').innerText = `Mapel: ${subName} | Paket: ${chosenPkg}`;
 
       let submissions = getStoredSubmissions();
-      submissions = submissions.filter(s => s.subject === subName && s.package === selectedPackageFilter);
+      submissions = submissions.filter(s => s.subject === subName && s.package === chosenPkg);
       const totalPart = submissions.length;
 
       const tbody = document.getElementById('analysisTableBody');
@@ -467,7 +517,7 @@
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
           <td class="py-3 px-3 text-center font-bold text-slate-800">${i}</td>
-          <td class="py-3 px-4 font-semibold text-slate-800">Soal Nomor ${i} (${subName} - ${selectedPackageFilter})</td>
+          <td class="py-3 px-4 font-semibold text-slate-800">Soal Nomor ${i} (${subName} - ${chosenPkg})</td>
           <td class="py-3 px-3 text-center font-bold text-slate-700">${totalPart > 0 ? `${correctCount} dari${totalPart} siswa` : `Simulasi`}</td>
           <td class="py-3 px-3 text-center font-black text-teal-700 text-sm">${percentage}%</td>
           <td class="py-3 px-4 text-center">
